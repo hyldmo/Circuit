@@ -32,3 +32,7 @@ footer {
     bottom: 0;
     left: 0;
 }
+
+#app h1 {
+	text-align: center;
+}
