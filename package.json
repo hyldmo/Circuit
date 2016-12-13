@@ -34,7 +34,7 @@
     "source-map-loader": "^0.1.5",
     "ts-loader": "*",
     "typescript": "^2.1.4",
-    "webpack-dev-server": "*"
     "webpack": "2.1.0-beta.27",
+    "webpack-dev-server": "*"
   }
 }
