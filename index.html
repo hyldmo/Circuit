@@ -9,10 +9,6 @@
 	<div id="container">
 		<div id="header"></div>
 		<div id="content">
-			<div id="logo">
-				<img src="logo.svg"></img>
-				<h1>cIRCuit</h1>
-			</div>
             <div id="app"></div>
 		</div>
 		<footer>
@@ -28,8 +24,16 @@
 		require('./renderer.js')
 	</script>
 
-    <script src="./node_modules/react/dist/react.js"></script>
-    <script src="./node_modules/react-dom/dist/react-dom.js"></script>
-	<script src="http:/localhost:1337/bundle.js"></script>
+     <script>
+      {
+        const script = document.createElement('script');
+        const port = process.env.PORT || 1337;
+        script.src = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/bundle.js'
+          : './dist/bundle.js';
+        // HACK: Writing the script path should be done with webpack
+        document.body.appendChild(script);
+      }
+    </script>
 </body>
 </html>
