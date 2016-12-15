@@ -13,7 +13,8 @@
 		</div>
 		<footer>
 			<!-- All of the Node.js APIs are available in this renderer process. -->
-			We are using Node.js <script>document.write(process.versions.node)</script>,
+			We are using Node.js <script>document.write(process.versions.node)</script>
+			(<script>document.write(process.env.NODE_ENV)</script> mode),
 			Chromium <script>document.write(process.versions.chrome)</script>,
 			and Electron <script>document.write(process.versions.electron)</script>.
 		</footer>
@@ -28,10 +29,10 @@
       {
         const script = document.createElement('script');
         const port = process.env.PORT || 1337;
-        script.src = (process.env.HOT)
-          ? 'http://localhost:' + port + '/dist/bundle.js'
+        script.src = process.env.NODE_ENV == 'development'
+          ? 'http://localhost:' + port + '/dist/bundle.js?mode=' + process.env.NODE_ENV
           : './dist/bundle.js';
-        // HACK: Writing the script path should be done with webpack
+        // TODO: Writing the script path should be done with webpack
         document.body.appendChild(script);
       }
     </script>

@@ -5,10 +5,11 @@ const webpack = require('webpack');
 const port = process.env.PORT || 1337;
 
 module.exports = Object.assign({}, CONFIG, {
-     entry: [
-        'webpack-hot-middleware/client?path=http://localhost:'+port+'/__webpack_hmr',
+    entry: [
+        'webpack-hot-middleware/client?path=http://localhost:' + port + '/__webpack_hmr',
         CONFIG.entry
     ],
+    
     devServer: {
         headers: { "Access-Control-Allow-Origin": "*" },
         historyApiFallback: true
@@ -22,29 +23,32 @@ module.exports = Object.assign({}, CONFIG, {
 
     module: {
         rules: [
-            ...CONFIG.module.rules,
             {
-                test: /\.html$/,
-                loader: 'file-loader?name=[path][name].[ext]!extract-loader!html-loader',
+                test: /\.ts$/,
+                loaders: ["react-hot-loader", "ts-loader"],
             },
+            {
+                test: /\.js$/,
+                loader: "source-map-loader",
+                exclude: ["node_modules"],
+                enforce: "pre",
+            }
         ]
-    },    
+    },
 
-    
-  plugins: [
-    // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
-    new webpack.HotModuleReplacementPlugin(),
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: "source-map",
 
-    // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
-    // https://github.com/webpack/docs/wiki/list-of-plugins#noerrorsplugin
-    new webpack.NoErrorsPlugin(),
+    plugins: [
+        // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
+        new webpack.HotModuleReplacementPlugin(),
 
-    // NODE_ENV should be production so that modules do not perform certain development checks
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
+        // Allow transpile-time checks in code
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        })
+    ],
 
-  // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-  target: 'electron-renderer'
+    // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
+    target: 'electron-renderer'
 });
