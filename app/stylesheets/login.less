@@ -25,19 +25,34 @@
     margin: auto;
     width: 300px;
 
-    input {
+    input, button {
         width: 100%;
         font-size: 20px;
         padding: 13px;
         margin: 10px;
         border: 2px solid transparent;
+        border-radius: 10px;
         color: @tea-brighter;
         background-color: @green-dark;
-        border-radius: 10px;
         outline:none;
+    }
 
+    input {
         &:focus {
-            border: 2px solid @green-brighter;
+            border-color: @green-brighter;
+        }
+    }
+
+    button {
+        border-color: @tea;
+        background-color: @green;
+
+        &:hover {
+            border-color: @tea-desat;
+            background-color: @green-bright;
+        }
+        &:active {
+            background-color: @green-dark;
         }
     }
 }
