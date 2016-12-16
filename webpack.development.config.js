@@ -1,4 +1,6 @@
-﻿const path = require('path');
+﻿'use strict'
+
+const path = require('path');
 const CONFIG = require('./webpack.config');
 const webpack = require('webpack');
 
@@ -7,11 +9,12 @@ const port = process.env.PORT || 1337;
 module.exports = Object.assign({}, CONFIG, {
     entry: [
         'webpack-hot-middleware/client?path=http://localhost:' + port + '/__webpack_hmr',
-        CONFIG.entry
+        CONFIG.entry,
+        './app/stylesheets/main.less'
     ],
     
     devServer: {
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: { 'Access-Control-Allow-Origin': '*' },
         historyApiFallback: true
     },
 
@@ -25,19 +28,23 @@ module.exports = Object.assign({}, CONFIG, {
         rules: [
             {
                 test: /\.ts$/,
-                loaders: ["react-hot-loader", "ts-loader"],
+                loaders: ['react-hot-loader', 'ts-loader'],
+            },
+            {
+                test: /\.less$/,
+                loaders: ['style-loader', 'css-loader', 'less-loader'],
             },
             {
                 test: /\.js$/,
-                loader: "source-map-loader",
-                exclude: ["node_modules"],
-                enforce: "pre",
+                loader: 'source-map-loader',
+                exclude: ['node_modules'],
+                enforce: 'pre',
             }
         ]
     },
 
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+    devtool: 'source-map',
 
     plugins: [
         // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html

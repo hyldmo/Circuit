@@ -9,7 +9,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const spawn = require('child_process').spawn;
-const config = require('./webpack.development.config');
+const config = require('../webpack.development.config');
 
 
 const app = express();

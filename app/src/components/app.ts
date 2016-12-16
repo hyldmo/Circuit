@@ -1,5 +1,6 @@
-import * as React from "react";
-import * as r from "r-dom";
+import * as React from 'react'
+import * as r from 'r-dom'
+import Login from './login'
 
 export interface Props {
     compiler: string;
@@ -8,10 +9,11 @@ export interface Props {
 
 const AppComponent = (props: Props) => r.div([
         r.div({id: "logo"}, [
-            r.img({src: 'logo.svg'}),
+            r.img({src: 'assets/logo.svg'}),
             r.h1('cIRCuit')
         ]),
-        r.h1(`Hello from ${props.compiler} and ${props.framework}!`)
+        r.h1(`Hello from ${props.compiler} and ${props.framework}!`),
+        r(Login)
     ]
 )
 

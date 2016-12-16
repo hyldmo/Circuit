@@ -8,7 +8,7 @@ module.exports = Object.assign({}, CONFIG, {
         rules: [
             {
                 test: /\.ts$/,
-                loader: "ts-loader"
+                loader: 'ts-loader'
             }
         ]
     },
@@ -17,7 +17,7 @@ module.exports = Object.assign({}, CONFIG, {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
+        'react': 'React',
+        'react-dom': 'ReactDOM'
     },
 });
