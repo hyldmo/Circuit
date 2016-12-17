@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as r from 'r-dom'
-import Login from './login'
+import Login from '../containers/login'
 
 export interface Props {
-    compiler: string;
-    framework: string;
+    compiler: string
+    framework: string
 }
 
 const AppComponent = (props: Props) => r.div([

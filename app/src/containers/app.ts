@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import AppComponent from '../components/app'
+import { updateCredentials } from '../actions'
 
 const mapStateToProps = (state) => {
     return {

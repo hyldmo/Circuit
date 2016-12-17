@@ -7,7 +7,14 @@ import { createStore, applyMiddleware } from 'redux'
 import App from "./containers/app";
 import reducers from './reducers'
 
-const store = createStore(reducers);
+const initialState = {
+    credentials: {
+        server: 'irc.freenode.net',
+        username: `testuser${Math.round(Math.random() * 10000)}`
+    }
+}
+
+const store = createStore(reducers, initialState);
 
 ReactDOM.render(
     r(Provider, { store: store }, [
