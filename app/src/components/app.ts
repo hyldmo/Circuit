@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const AppComponent = (props: Props) => r.div([
-        r.div({id: "logo"}, [
+        r.div({id: 'logo'}, [
             r.img({src: 'assets/logo.svg'}),
             r.h1('cIRCuit')
         ]),

@@ -7,16 +7,16 @@ const mapStateToProps = (state) => {
         compiler: (state.compiler),
         framework: (state.framework)
     }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
     }
-};
+}
 
 const App = connect(
     mapStateToProps,
     mapDispatchToProps
-)(AppComponent);
+)(AppComponent)
 
 export default App

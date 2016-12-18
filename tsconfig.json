@@ -4,9 +4,12 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es5"
+    "target": "es6"
   },
   "include": [
     "./app/src/*"
+  ],
+  "exclude": [
+    "./node_modules/"
   ]
 }
