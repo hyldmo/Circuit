@@ -1,10 +1,17 @@
 import { Action } from '../actions/types'
+import DateTimeFormat = Intl.DateTimeFormat
 
 export interface Connection {
     readonly server: string
-    readonly messages: Array<string>
+    readonly messages: Array<IMessage>
     readonly state: State
     readonly userMessage: string
+}
+
+export interface IMessage {
+    readonly message: string,
+    readonly timestamp: number
+    readonly sender: string
 }
 
 type State =
@@ -13,23 +20,27 @@ type State =
     'DISCONNECTED'
 
 const connection = (state: Connection, action: Action|any): Connection => {
-    console.log('yo')
+    if (state.server !== action.server)
+        return state
+
     switch (action.type) {
         case 'WRITE_MESSAGE':
-            if (state.server !== action.server)
-                return state
             return {
                 ...state,
                 userMessage: action.message
             }
-
         case 'SEND_MESSAGE':
-            console.log('SEND_MESSSAGE')
-            if (state.server !== action.server)
-                return state
             return {
                 ...state,
                 userMessage: ''
+            }
+        case 'RECEIVE_MESSAGE':
+            return {
+                ...state,
+                messages: [
+                    ...state.messages,
+                    action.message
+                ]
             }
         default:
             return state
@@ -43,11 +54,12 @@ const connections = (state: Array<Connection> = [], action: Action|any): Array<C
                 ...state,
                 {
                     server: action.server,
-                    messages: [ 'hello', 'world' ],
+                    messages: [],
                     state: 'CONNECTED',
                     userMessage: ''
                 }
             ]
+        case 'RECEIVE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'WRITE_MESSAGE':
             return state.map(c => connection(c, action))

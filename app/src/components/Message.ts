@@ -1,11 +1,12 @@
 import * as React from 'react'
 import * as r from 'r-dom'
+import { IMessage } from '../reducers/connections'
 
-const Message = (message) => r.li(
+const Message = (props: IMessage) => r.li(
     { className: 'message' },
     [
-        r.span('<username>: '),
-        r.span(message)
+        r.span(`${props.sender}: `),
+        r.span(props.message)
     ]
 )
 export default Message

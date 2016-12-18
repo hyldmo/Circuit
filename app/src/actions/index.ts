@@ -1,4 +1,5 @@
 import { Action } from './types'
+import { IMessage } from '../reducers/connections'
 
 export function updateCredentials (field: string, value: string|number): Action {
     return {
@@ -38,9 +39,10 @@ export function connected (server: string): Action {
     }
 }
 
-export function receive (message: string): Action {
+export function receive (server: string, message: IMessage): Action {
     return {
         type: 'RECEIVE_MESSAGE',
+        server,
         message
     }
 }
