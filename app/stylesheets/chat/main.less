@@ -1,0 +1,48 @@
+@import "../colors";
+@import "tabs";
+
+.chats {
+    margin: 1em;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.chat {
+    // TODO: Figure out why this is needed
+    padding-bottom: 10px;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+
+    &__messages {
+        margin: 0;
+        background-color: @green-dark;
+        height: 100%;
+        border-radius: 0.5em;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding-left: 0;
+
+        list-style: none;
+        li {
+            border-bottom: 1px solid fade(@green-darker, 40%);
+        }
+    }
+
+    &__box {
+        margin-top: 1em;
+        display: flex;
+        flex-flow: row nowrap;
+        button, input {
+            margin: 0;
+            padding: 0.6em;
+            font-size: 1em;
+        }
+
+        button {
+            margin-left: 1em;
+            width: auto;
+        }
+    }
+}

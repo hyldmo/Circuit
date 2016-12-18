@@ -1,0 +1,34 @@
+@import "colors";
+
+.input {
+    width: 100%;
+    font-size: 20px;
+    padding: 13px;
+    margin: 10px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    background-color: @green-dark;
+    outline:none;
+
+    &:focus {
+        border-color: @green-brighter;
+    }
+
+    &::-webkit-input-placeholder {
+        color: fade(@tea, 70%);
+    }
+
+    &__button {
+        border-color: @tea;
+        background-color: @green;
+
+        &:hover {
+            border-color: @tea-desat;
+            background-color: @green-bright;
+        }
+        &:active {
+            background-color: @green-dark;
+        }
+    }
+}

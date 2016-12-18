@@ -2,14 +2,19 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
+    "skipLibCheck": true,
+    "allowJs": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es6"
+    "target": "ES6"
   },
+  "files": [
+    "./node_modules/@types/webpack-env/index.d.ts"
+  ],
   "include": [
     "./app/src/*"
   ],
   "exclude": [
-    "./node_modules/"
+    "node_modules"
   ]
 }

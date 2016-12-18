@@ -2,38 +2,24 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>cIRCuit</title>
 </head>
 <body>
-	<div id="container">
-		<div id="header"></div>
-		<div id="content">
-            <div id="app"></div>
-		</div>
-		<footer>
-			<!-- All of the Node.js APIs are available in this renderer process. -->
-			We are using Node.js <script>document.write(process.versions.node)</script>
-			(<script>document.write(process.env.NODE_ENV)</script> mode),
-			Chromium <script>document.write(process.versions.chrome)</script>,
-			and Electron <script>document.write(process.versions.electron)</script>.
-		</footer>
-	</div>
+	<div id="app"></div>
 
 	<script>
 		// You can also require other files to run in this process
 		require('./renderer.js')
-	</script>
-
-     <script>
-      {
-        const script = document.createElement('script');
-        const port = process.env.PORT || 1337;
-        script.src = process.env.NODE_ENV == 'development'
-          ? 'http://localhost:' + port + '/dist/bundle.js?mode=' + process.env.NODE_ENV
-          : './dist/bundle.js';
-        // TODO: Writing the script path should be done with webpack
-        document.body.appendChild(script);
-      }
+        {
+            const script = document.createElement('script');
+            const port = process.env.PORT || 1337;
+            script.src = process.env.NODE_ENV == 'development'
+              ? 'http://localhost:' + port + '/dist/bundle.js?mode=' + process.env.NODE_ENV
+              : './dist/bundle.js';
+            // TODO: Writing the script path should be done with webpack
+            document.body.appendChild(script);
+        }
     </script>
 </body>
 </html>

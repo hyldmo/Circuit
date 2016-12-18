@@ -1,16 +1,18 @@
 import { connect } from 'react-redux'
-import AppComponent from '../components/app'
-import { updateCredentials } from '../actions'
+import AppComponent from '../components/App'
+import {AppProps} from '../components/App'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): AppProps => {
     return {
         compiler: (state.compiler),
-        framework: (state.framework)
+        framework: (state.framework),
+        connections: state.connections
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+
     }
 }
 

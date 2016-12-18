@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { Action } from '../actions/types'
 import credentials from './credentials'
+import connections from './connections'
 
 const compiler = (state: string = 'TypeScript', action: Action) => {
     switch (action.type) {
@@ -18,7 +19,7 @@ const framework = (state: string = 'React & Redux', action: Action) => {
 
 
 const reducers = combineReducers({
-    compiler, framework, credentials
+    compiler, framework, credentials, connections
 })
 
 export default reducers

@@ -1,27 +1,11 @@
 import { Action } from '../actions/types'
 
-const username = (state: string = '', action: Action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-const server = (state: string = '', action: Action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-
 // TODO: Move this
 export interface Credentials {
     readonly username: string
     readonly password?: string
     readonly server: string
     readonly port?: number
-    readonly actions?: ComponentActions
 }
 export interface ComponentActions {
     [propName: string]: any
