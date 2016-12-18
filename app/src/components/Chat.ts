@@ -18,6 +18,10 @@ const Chat = (props: Connection|any) => r.div({className: 'chat'}, [
                 value: props.userMessage,
                 onChange: e => {
                     props.actions.writeMessage(props.server, e.target.value)
+                },
+                onKeyDown: e => {
+                    if (e.key === 'Enter')
+                        props.actions.sendMessage(props.server, props.userMessage)
                 }
             }),
             r.button({
