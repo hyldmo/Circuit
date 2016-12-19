@@ -4,7 +4,8 @@ import * as r from 'r-dom'
 const ChatTabs = (tabs) => r.ul(
     { className: 'tabs' },
     [
-        tabs.map(tab => r.li({key: tab}, parseName(tab)))
+        tabs.map(tab => r.li({key: tab}, parseName(tab))),
+        r.li({className: 'tabs__add', key: '+'}, '+')
     ]
 )
 
