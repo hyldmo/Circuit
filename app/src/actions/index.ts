@@ -46,3 +46,10 @@ export function receive (server: string, message: IMessage): Action {
         message
     }
 }
+
+export function showForm (show: boolean): Action {
+    return {
+        type: 'SHOW_CREDENTIALS_FORM',
+        payload: show
+    }
+}

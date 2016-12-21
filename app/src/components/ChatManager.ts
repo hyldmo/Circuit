@@ -6,10 +6,14 @@ import ChatTabs from './ChatTabs'
 import { Connection } from '../reducers/connections'
 
 
-const ChatManager = ({ connections, actions }: Array<Connection>|any) => r.div(
+const ChatManager = ({ showForm, connections, actions }: Array<Connection>|any) => r.div(
     { className: 'chats' },
     [
-        ChatTabs(connections.map(c => c.server)),
+        ChatTabs({tabs: connections.map(c => c.server), showForm: actions.showForm }),
+        r.div({ className: `modal ${showForm ? 'visible' : 'hidden'}` }, [
+            r.div({ className: 'overlay', onClick: e => actions.showForm(false) }),
+            r(Login)
+        ]),
         connections.map(connection => r(Chat, { ...connection, key: connection.server, actions }))
     ]
 )

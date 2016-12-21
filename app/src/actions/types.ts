@@ -6,7 +6,8 @@ type ActionType =
     'DISCONNECTED' |
     'RECEIVE_MESSAGE' |
     'SEND_MESSAGE' |
-    'WRITE_MESSAGE'
+    'WRITE_MESSAGE' |
+    'SHOW_CREDENTIALS_FORM'
 
 export interface Action {
     readonly type: ActionType

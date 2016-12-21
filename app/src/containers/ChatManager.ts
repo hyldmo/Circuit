@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import ChatComponent from '../components/ChatManager'
-import {sendMessage, writeMessage} from '../actions'
+import {sendMessage, writeMessage, showForm} from '../actions'
 import {AppProps} from '../components/App'
 
 const mapStateToProps = (state) => {
     return {
-        connections: state.connections
+        connections: state.connections,
+        showForm: state.showForm
     }
 }
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             sendMessage: (server, message) => {
                 dispatch(sendMessage(server, message))
+            },
+            showForm: (show) => {
+                dispatch(showForm(show))
             }
         }
     }

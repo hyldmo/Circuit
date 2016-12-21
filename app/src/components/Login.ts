@@ -3,7 +3,7 @@ import * as r from 'r-dom'
 import { Credentials } from '../reducers/credentials'
 
 
-const Login = (props: Credentials|any) => r.div({id: 'login'}, [
+const Login = (props: Credentials|any) => r.div({className: 'login'}, [
     r.input({
         className: 'input',
         type: 'text',

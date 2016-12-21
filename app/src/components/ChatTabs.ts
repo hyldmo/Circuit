@@ -1,11 +1,16 @@
 import * as React from 'react'
 import * as r from 'r-dom'
 
-const ChatTabs = (tabs) => r.ul(
+export interface ChatTabProps {
+    tabs: Array<string>
+    showForm: Function
+}
+
+const ChatTabs = (props: ChatTabProps) => r.ul(
     { className: 'tabs' },
     [
-        tabs.map(tab => r.li({key: tab}, parseName(tab))),
-        r.li({className: 'tabs__add', key: '+'}, '+')
+        props.tabs.map(tab => r.li({key: tab}, parseName(tab))),
+        r.li({className: 'tabs__add', key: '+', onClick: e => props.showForm(true)}, '+')
     ]
 )
 

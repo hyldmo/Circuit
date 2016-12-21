@@ -29,18 +29,16 @@ export default function configureStore(initialState = {}) {
     // run sagas
     SagaManager.startSagas(sagaMiddleware)
 
-    if (__DEV__) {
+    if (__DEV__ && module.hot) {
         // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
-        if (module.hot) {
-            module.hot.accept('./reducers', () =>
-                store.replaceReducer(require('./reducers').default)
-            )
+        module.hot.accept('./reducers', () =>
+            store.replaceReducer(require('./reducers').default)
+        )
 
-            module.hot.accept('./sagas/SagaManager', () => {
-                SagaManager.cancelSagas(store)
-                require('./sagas/SagaManager').default.startSagas(sagaMiddleware)
-            })
-        }
+        module.hot.accept('./sagas/SagaManager', () => {
+            SagaManager.cancelSagas(store)
+            require('./sagas/SagaManager').default.startSagas(sagaMiddleware)
+        })
     }
 
     return store

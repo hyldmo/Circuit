@@ -17,9 +17,18 @@ const framework = (state: string = 'React & Redux', action: Action) => {
     }
 }
 
+const showForm = (state: boolean = false, action: Action|any): boolean => {
+    switch (action.type) {
+        case 'SHOW_CREDENTIALS_FORM':
+            return action.payload
+        default:
+            return state
+    }
+}
+
 
 const reducers = combineReducers({
-    compiler, framework, credentials, connections
+    showForm, compiler, framework, credentials, connections
 })
 
 export default reducers
