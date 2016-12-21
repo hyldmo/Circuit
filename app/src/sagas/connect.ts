@@ -5,18 +5,28 @@ import { receive, connected, connecting } from '../actions'
 import { Action } from '../actions/types'
 
 
-export default function* connectToServer () {
-    const { credentials } = yield take('CONNECT')
+export default function* watchConnects () {
+    try {
+        while (true) {
+            const { credentials } = yield take('CONNECT')
+            yield fork(connectToServer, credentials)
+        }
+    } catch (e) {
+        console.log('Disconnected')
+    }
+}
+
+function* connectToServer (credentials: Credentials) {
     try {
         // const socket = new WebSocket(`ws://${credentials.server}:${credentials.port}`)
-        const socket = new WebSocket('ws://echo.websocket.org')
+        const socket = new WebSocket(`ws://echo.websocket.org?key=${Math.floor(Math.random() * 100)}`)
         yield put(connecting(socket.url))
         const channel = yield call(connectChannel, socket)
 
         while (true) {
             yield take(channel)
             yield put(connected(socket.url))
-
+            console.log(`Connected to ${socket.url}`)
             // Pretend server said hello TODO: Remove this
             socket.send('Connection successful. I will repeat anything you say.')
             yield fork(watchUserSentMessages, socket)

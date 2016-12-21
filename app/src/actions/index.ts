@@ -53,3 +53,10 @@ export function showForm (show: boolean): Action {
         payload: show
     }
 }
+
+export function changeTab (index: number): Action {
+    return {
+        type: 'CHANGE_TAB',
+        payload: index
+    }
+}

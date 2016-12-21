@@ -21,6 +21,17 @@ const showForm = (state: boolean = false, action: Action|any): boolean => {
     switch (action.type) {
         case 'SHOW_CREDENTIALS_FORM':
             return action.payload
+        case 'CONNECT':
+            return false
+        default:
+            return state
+    }
+}
+
+const currentTab = (state: number = 0, action: Action|any): number => {
+    switch (action.type) {
+        case 'CHANGE_TAB':
+            return action.payload
         default:
             return state
     }
@@ -28,7 +39,7 @@ const showForm = (state: boolean = false, action: Action|any): boolean => {
 
 
 const reducers = combineReducers({
-    showForm, compiler, framework, credentials, connections
+    currentTab, showForm, compiler, framework, credentials, connections
 })
 
 export default reducers

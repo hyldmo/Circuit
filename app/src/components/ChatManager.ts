@@ -5,16 +5,32 @@ import Chat from './Chat'
 import ChatTabs from './ChatTabs'
 import { Connection } from '../reducers/connections'
 
+export interface ChatManagerProps {
+    connections: Array<Connection>
+    showForm: boolean
+    currentTab: number
+    actions: {
+        writeMessage: Function
+        sendMessage: Function
+        showForm: Function
+        changeTab: Function
+    }
+}
 
-const ChatManager = ({ showForm, connections, actions }: Array<Connection>|any) => r.div(
+const ChatManager = (props: ChatManagerProps) => r.div(
     { className: 'chats' },
     [
-        ChatTabs({tabs: connections.map(c => c.server), showForm: actions.showForm }),
-        r.div({ className: `modal ${showForm ? 'visible' : 'hidden'}` }, [
-            r.div({ className: 'overlay', onClick: e => actions.showForm(false) }),
+        ChatTabs({
+            tabs: props.connections.map(c => c.server),
+            showForm: props.actions.showForm,
+            changeTab: props.actions.changeTab,
+            currentTab: props.currentTab
+        }),
+        r.div({ className: `modal ${props.showForm ? 'visible' : 'hidden'}` }, [
+            r.div({ className: 'overlay', onClick: e => props.actions.showForm(false) }),
             r(Login)
         ]),
-        connections.map(connection => r(Chat, { ...connection, key: connection.server, actions }))
+        r(Chat, { ...props.connections[props.currentTab], actions: props.actions })
     ]
 )
 export default ChatManager

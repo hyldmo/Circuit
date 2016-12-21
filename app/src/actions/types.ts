@@ -7,7 +7,8 @@ type ActionType =
     'RECEIVE_MESSAGE' |
     'SEND_MESSAGE' |
     'WRITE_MESSAGE' |
-    'SHOW_CREDENTIALS_FORM'
+    'SHOW_CREDENTIALS_FORM' |
+    'CHANGE_TAB'
 
 export interface Action {
     readonly type: ActionType

@@ -3,13 +3,24 @@ import * as r from 'r-dom'
 
 export interface ChatTabProps {
     tabs: Array<string>
+    currentTab: number
     showForm: Function
+    changeTab: Function
 }
 
 const ChatTabs = (props: ChatTabProps) => r.ul(
     { className: 'tabs' },
     [
-        props.tabs.map(tab => r.li({key: tab}, parseName(tab))),
+        props.tabs.map((tab, index) =>
+            r.li(
+                {
+                    className: props.currentTab === index ? 'active' : 'inactive',
+                    key: index,
+                    onClick: e => props.changeTab(index)
+                },
+                parseName(tab)
+            )
+        ),
         r.li({className: 'tabs__add', key: '+', onClick: e => props.showForm(true)}, '+')
     ]
 )
@@ -17,7 +28,7 @@ const ChatTabs = (props: ChatTabProps) => r.ul(
 
 function parseName(url: string): string {
     // lol
-    let name = url.split('.').reduce((a, b) => a.length > b.length ? a : b)
+    let name = url.split('.').slice(0, -1).reduce((a, b) => a.length > b.length ? a : b)
     name = name[0].toUpperCase() + name.substring(1)
     return name
 }
