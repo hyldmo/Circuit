@@ -31,11 +31,7 @@ if (module.hot) {
     // and display an overlay for runtime errors
     const renderApp = render
     const renderError = (error) => {
-        const RedBox = require('redbox-react')
-        ReactDOM.render(
-            r(RedBox, { error }),
-            document.getElementById('app'),
-        )
+        // TODO: Figure out to integrate with current electron error handler
     }
 
     render = () => {
