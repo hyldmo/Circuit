@@ -48,7 +48,6 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-saga": "^0.13.0",
-    "sou": "^1.0.0",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
     "ts-loader": "*",
