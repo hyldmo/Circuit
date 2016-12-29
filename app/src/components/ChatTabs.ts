@@ -6,6 +6,7 @@ export interface ChatTabProps {
     currentTab: number
     showForm: Function
     changeTab: Function
+    closeTab: Function
 }
 
 const ChatTabs = (props: ChatTabProps) => r.ul(
@@ -16,9 +17,26 @@ const ChatTabs = (props: ChatTabProps) => r.ul(
                 {
                     className: props.currentTab === index ? 'active' : 'inactive',
                     key: index,
-                    onClick: e => props.changeTab(index)
+                    onClick: e => {
+                        if (props.currentTab !== index)
+                            props.changeTab(index)
+                    }
                 },
-                parseName(tab)
+                [
+                    r.span(parseName(tab)),
+                    props.tabs.length > 1
+                        ? r.button(
+                            {
+                                className: 'btn--close',
+                                onClick: e => {
+                                    e.stopPropagation()
+                                    props.closeTab(tab)
+                                }
+                            },
+                            'x'
+                        )
+                        : null
+                ]
             )
         ),
         r.li({className: 'tabs__add', key: '+', onClick: e => props.showForm(true)}, '+')

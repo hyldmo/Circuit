@@ -60,3 +60,10 @@ export function changeTab (index: number): Action<number> {
         payload: index
     }
 }
+
+export function closeTab (url: string): Action<string> {
+    return {
+        type: 'CLOSE_TAB',
+        payload: url
+    }
+}

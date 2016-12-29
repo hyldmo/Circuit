@@ -46,7 +46,7 @@ const connection = (state: Connection, action: ActionMeta<string&IMessage, strin
     }
 }
 
-const connections = (state: Array<Connection> = [], action: ActionMeta<string&IMessage, string>): Array<Connection> => {
+const connections = (state: Array<Connection> = [], action: ActionMeta<number&string&IMessage, string>): Array<Connection> => {
     switch (action.type) {
         case 'CONNECTED':
             return [
@@ -58,6 +58,8 @@ const connections = (state: Array<Connection> = [], action: ActionMeta<string&IM
                     userMessage: ''
                 }
             ]
+        case 'CLOSE_TAB':
+            return state.filter(c => c.server !== action.payload)
         case 'RECEIVE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'WRITE_MESSAGE':

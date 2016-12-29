@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import ChatComponent from '../components/ChatManager'
-import { sendMessage, writeMessage, showForm, changeTab } from '../actions'
-import {AppProps} from '../components/App'
+import { sendMessage, writeMessage, showForm, changeTab, closeTab } from '../actions'
 
 const mapStateToProps = (state) => {
     return {
@@ -25,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             changeTab: (index) => {
                 dispatch(changeTab(index))
+            },
+            closeTab: (url) => {
+                dispatch(closeTab(url))
             }
         }
     }

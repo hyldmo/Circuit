@@ -1,19 +1,13 @@
+///<reference path="../../../node_modules/redux-saga/index.d.ts"/>
 import { Credentials } from '../reducers/credentials'
-import { eventChannel, takeEvery, channel } from 'redux-saga'
+import { eventChannel, takeEvery, channel, Task } from 'redux-saga'
 import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
 import { receive, connected, connecting } from '../actions'
 import { Action, ActionMeta } from '../actions/types'
 
 
 export default function* watchConnects () {
-    try {
-        while (true) {
-            const { credentials } = yield take('CONNECT')
-            yield fork(connectToServer, credentials)
-        }
-    } catch (e) {
-        console.log('Disconnected')
-    }
+    yield takeEvery('CONNECT', connectToServer)
 }
 
 function* connectToServer (credentials: Credentials) {
@@ -29,8 +23,13 @@ function* connectToServer (credentials: Credentials) {
             console.log(`Connected to ${socket.url}`)
             // Pretend server said hello TODO: Remove this
             socket.send('Connection successful. I will repeat anything you say.')
-            yield fork(watchUserSentMessages, socket)
-            yield fork(watchMessages, socket)
+            const userMessageTask = yield fork(watchUserSentMessages, socket)
+            const messageTask = yield fork(watchMessages, socket)
+            yield take((action: Action<string>) => {
+                return action.type === 'CLOSE_TAB' && action.payload === socket.url
+            })
+            yield cancel(userMessageTask)
+            yield cancel(messageTask)
         }
     } finally {
         console.log('Disconnected')
@@ -49,18 +48,20 @@ function* watchMessages (socket: WebSocket) {
             }))
         }
     } finally {
-        console.log('Disconnected')
+        console.log(`Stopped watching messages from ${socket.url}`)
     }
 }
 
 function* watchUserSentMessages (socket: WebSocket) {
     try {
         while (true) {
-            let { message } = yield take((action: ActionMeta<string, string>) => action.type === 'SEND_MESSAGE' && action.meta === socket.url)
+            let { message } = yield take((action: ActionMeta<string, string>) => {
+                return action.type === 'SEND_MESSAGE' && action.meta === socket.url
+            })
             socket.send(message)
         }
     } finally {
-        console.log('Message failed')
+        console.log(`Stopped watching messages to ${socket.url}`)
     }
 }
 

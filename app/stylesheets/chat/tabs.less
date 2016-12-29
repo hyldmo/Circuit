@@ -10,14 +10,34 @@
         border-bottom: none;
         border-top-left-radius: 0.5em;
         border-top-right-radius: 0.5em;
-        cursor: pointer;
         font-weight: bold;
         padding: 0.8em;
+        cursor: pointer;
 
         &.inactive {
             background-color: desaturate(@green-dark, 50%);
             border-color: transparent;
             color: fade(white, 50%);
+        }
+
+        .btn--close {
+            display: none;
+            outline: none;
+            cursor: pointer;
+        }
+        &:hover .btn--close {
+            display: inline-block;
+            color: fade(white, 50%);
+            background: none;
+            vertical-align: middle;
+            font-size: 0.85rem;
+            //display: none;
+            border: none;
+            position: absolute;
+
+            &:hover {
+                color: fade(white, 80%);
+            }
         }
 
         &.tabs__add {

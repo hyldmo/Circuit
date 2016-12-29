@@ -8,7 +8,8 @@ type ActionType =
     'SEND_MESSAGE' |
     'WRITE_MESSAGE' |
     'SHOW_CREDENTIALS_FORM' |
-    'CHANGE_TAB'
+    'CHANGE_TAB' |
+    'CLOSE_TAB'
 
 export interface Action<T> extends ReduxActions.Action<T> {
     readonly type: ActionType

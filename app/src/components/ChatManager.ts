@@ -14,6 +14,7 @@ export interface ChatManagerProps {
         sendMessage: Function
         showForm: Function
         changeTab: Function
+        closeTab: Function
     }
 }
 
@@ -24,7 +25,8 @@ const ChatManager = (props: ChatManagerProps) => r.div(
             tabs: props.connections.map(c => c.server),
             showForm: props.actions.showForm,
             changeTab: props.actions.changeTab,
-            currentTab: props.currentTab
+            closeTab: props.actions.closeTab,
+            currentTab: props.currentTab,
         }),
         r.div({ className: `modal ${props.showForm ? 'visible' : 'hidden'}` }, [
             r.div({ className: 'overlay', onClick: e => props.actions.showForm(false) }),
