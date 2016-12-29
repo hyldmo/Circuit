@@ -2,7 +2,7 @@ import { Credentials } from '../reducers/credentials'
 import { eventChannel, takeEvery, channel } from 'redux-saga'
 import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
 import { receive, connected, connecting } from '../actions'
-import { Action } from '../actions/types'
+import { Action, ActionMeta } from '../actions/types'
 
 
 export default function* watchConnects () {
@@ -56,7 +56,7 @@ function* watchMessages (socket: WebSocket) {
 function* watchUserSentMessages (socket: WebSocket) {
     try {
         while (true) {
-            let {message} = yield take((action: Action|any) => action.type === 'SEND_MESSAGE' && action.server === socket.url)
+            let { message } = yield take((action: ActionMeta<string, string>) => action.type === 'SEND_MESSAGE' && action.meta === socket.url)
             socket.send(message)
         }
     } finally {
@@ -70,7 +70,6 @@ function* connectChannel(socket: WebSocket) {
         socket.onopen = event => {
             emitter(event)
         }
-        // The subscriber must return an unsubscribe function
         return socket.close
     })
 }
@@ -81,7 +80,6 @@ function* messageChannel(socket: WebSocket) {
         socket.onmessage = event => {
             emitter(event.data)
         }
-        // The subscriber must return an unsubscribe function
         return socket.close
     })
 }

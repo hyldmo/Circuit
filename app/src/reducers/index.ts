@@ -3,21 +3,7 @@ import { Action } from '../actions/types'
 import credentials from './credentials'
 import connections from './connections'
 
-const compiler = (state: string = 'TypeScript', action: Action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-const framework = (state: string = 'React & Redux', action: Action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-const showForm = (state: boolean = false, action: Action|any): boolean => {
+const showForm = (state: boolean = false, action: Action<boolean>): boolean => {
     switch (action.type) {
         case 'SHOW_CREDENTIALS_FORM':
             return action.payload
@@ -28,7 +14,7 @@ const showForm = (state: boolean = false, action: Action|any): boolean => {
     }
 }
 
-const currentTab = (state: number = 0, action: Action|any): number => {
+const currentTab = (state: number = 0, action: Action<number>): number => {
     switch (action.type) {
         case 'CHANGE_TAB':
             return action.payload
@@ -39,7 +25,7 @@ const currentTab = (state: number = 0, action: Action|any): number => {
 
 
 const reducers = combineReducers({
-    currentTab, showForm, compiler, framework, credentials, connections
+    currentTab, showForm, credentials, connections
 })
 
 export default reducers

@@ -1,4 +1,4 @@
-import { Action } from '../actions/types'
+import { Action, ActionMeta } from '../actions/types'
 
 // TODO: Move this
 export interface Credentials {
@@ -11,13 +11,13 @@ export interface ComponentActions {
     [propName: string]: any
 }
 
-const credentials = (state: Credentials = { username: '', server: '' }, action: any|Action): Credentials => {
+const credentials = (state: Credentials = { username: '', server: '' }, action: ActionMeta<string|number, string>): Credentials => {
     switch (action.type) {
         case 'UPDATE_CREDENTIALS':
             let newState = {
                 ...state,
             }
-            newState[action.field] = action.value
+            newState[action.meta] = action.payload
             return  newState
         default:
             return state

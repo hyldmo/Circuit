@@ -10,7 +10,10 @@ type ActionType =
     'SHOW_CREDENTIALS_FORM' |
     'CHANGE_TAB'
 
-export interface Action {
+export interface Action<T> extends ReduxActions.Action<T> {
     readonly type: ActionType
-    [propName: string]: any
+}
+
+export interface ActionMeta<Payload, Meta> extends ReduxActions.ActionMeta<Payload, Meta>  {
+    readonly type: ActionType
 }

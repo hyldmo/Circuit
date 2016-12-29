@@ -1,5 +1,4 @@
-import { Action } from '../actions/types'
-import DateTimeFormat = Intl.DateTimeFormat
+import { Action, ActionMeta } from '../actions/types'
 
 export interface Connection {
     readonly server: string
@@ -19,15 +18,15 @@ type State =
     'CONNECTED' |
     'DISCONNECTED'
 
-const connection = (state: Connection, action: Action|any): Connection => {
-    if (state.server !== action.server)
+const connection = (state: Connection, action: ActionMeta<string&IMessage, string>): Connection => {
+    if (state.server !== action.meta)
         return state
 
     switch (action.type) {
         case 'WRITE_MESSAGE':
             return {
                 ...state,
-                userMessage: action.message
+                userMessage: action.payload
             }
         case 'SEND_MESSAGE':
             return {
@@ -39,7 +38,7 @@ const connection = (state: Connection, action: Action|any): Connection => {
                 ...state,
                 messages: [
                     ...state.messages,
-                    action.message
+                    action.payload
                 ]
             }
         default:
@@ -47,13 +46,13 @@ const connection = (state: Connection, action: Action|any): Connection => {
     }
 }
 
-const connections = (state: Array<Connection> = [], action: Action|any): Array<Connection> => {
+const connections = (state: Array<Connection> = [], action: ActionMeta<string&IMessage, string>): Array<Connection> => {
     switch (action.type) {
         case 'CONNECTED':
             return [
                 ...state,
                 {
-                    server: action.server,
+                    server: action.payload,
                     messages: [],
                     state: 'CONNECTED',
                     userMessage: ''
