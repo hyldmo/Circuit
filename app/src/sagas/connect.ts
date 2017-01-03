@@ -55,10 +55,10 @@ function* watchMessages (socket: WebSocket) {
 function* watchUserSentMessages (socket: WebSocket) {
     try {
         while (true) {
-            let { message } = yield take((action: ActionMeta<string, string>) => {
+            let { payload } = yield take((action: ActionMeta<string, string>) => {
                 return action.type === 'SEND_MESSAGE' && action.meta === socket.url
             })
-            socket.send(message)
+            socket.send(payload)
         }
     } finally {
         console.log(`Stopped watching messages to ${socket.url}`)
