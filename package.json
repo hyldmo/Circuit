@@ -33,7 +33,6 @@
     "react-dom": "^15.4.1"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.12.1",
     "babel-register": "^6.18.0",
     "css-loader": "^0.26.1",
     "express": "^4.14.0",
