@@ -1,6 +1,6 @@
 # Circuit
 
-Circuit is an IRC client build with React and Electron.
+Circuit is an IRC client built with React and Electron.
 
 ## Getting started
 
