@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as r from 'r-dom'
 import { Provider } from 'react-redux'
 
 import App from './containers/App'
@@ -19,9 +18,9 @@ const store = configureStore(initialState)
 
 let render = () => {
     ReactDOM.render(
-        r(Provider, { store: store }, [
-            r(App)
-        ]),
+        <Provider store={store}>
+            <App/>
+        </Provider>,
         document.getElementById('app')
     )
 }

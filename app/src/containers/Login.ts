@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch): ComponentActions => {
     }
 }
 
-const Login = connect<{}, {}, Credentials>(
+const Login = connect(
     mapStateToProps,
     mapDispatchToProps
 )(LoginComponent)

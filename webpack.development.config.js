@@ -27,7 +27,7 @@ module.exports = Object.assign({}, CONFIG, {
     module: {
         rules: [
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 loaders: ['react-hot-loader', 'ts-loader'],
             },
             {

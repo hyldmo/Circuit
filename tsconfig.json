@@ -6,7 +6,8 @@
     "allowJs": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "ES6"
+    "target": "ES6",
+    "jsx": "react"
   },
   "files": [
     "./node_modules/@types/webpack-env/index.d.ts"
