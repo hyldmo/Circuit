@@ -16,7 +16,7 @@ export interface ChatManagerProps {
         closeTab: Function
     }
 }
-// TODO: Fix chat props
+
 const ChatManager = (props: ChatManagerProps) => (
     <div className='chats'>
             <ChatTabs tabs={props.connections.map(c => c.server)}
@@ -29,7 +29,7 @@ const ChatManager = (props: ChatManagerProps) => (
                 <div className='overlay' onClick={e => props.actions.showForm(false) }/>
                 <Login/>
             </div>
-            <Chat props={props.connections[props.currentTab]} actions={props.actions} />
+            <Chat { ...props.connections[props.currentTab] } actions={props.actions} />
     </div>
 )
 export default ChatManager
