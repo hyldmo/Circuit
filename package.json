@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "production": "webpack --config webpack.production.config.js --progress --colors --production",
-    "dev": "cross-env NODE_ENV=development node app/server.js",
+    "dev": "cross-env NODE_ENV=development node app/dev-server.js",
     "dev-server": "webpack-dev-server --config webpack.development.config.js --port 1337 --progress --colors --hot --inline --watch"
   },
   "repository": "https://github.com/electron/electron-quick-start",
