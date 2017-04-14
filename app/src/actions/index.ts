@@ -55,9 +55,9 @@ export function receive (server: string, channel: string, message: IMessage): Ac
     }
 }
 
-export function showForm (show: boolean): Action<boolean> {
+export function changeViewMode (show: boolean): Action<boolean> {
     return {
-        type: 'SHOW_CREDENTIALS_FORM',
+        type: 'CHANGE_VIEW_MODE',
         payload: show
     }
 }

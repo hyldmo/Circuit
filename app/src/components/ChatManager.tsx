@@ -3,6 +3,7 @@ import Login from '../containers/Login'
 import Chat from './Chat'
 import ChatTabs from './ChatTabs'
 import { Connection, Channel } from '../reducers/connections'
+import { ViewMode } from '../reducers/viewMode'
 
 export interface ChatManagerProps {
     channels: Array<Channel>
@@ -10,7 +11,7 @@ export interface ChatManagerProps {
     actions: {
         writeMessage: Function
         sendMessage: Function
-        showForm: Function
+        changeViewMode: (channel: ViewMode) => void
         changeTab: Function
         closeTab: Function
     }
@@ -19,7 +20,7 @@ export interface ChatManagerProps {
 const ChatManager = (props: ChatManagerProps) => (
     <div className='channels'>
         <ChatTabs tabs={props.channels.map(c => c.name)}
-            showForm={props.actions.showForm}
+            changeViewMode={props.actions.changeViewMode}
             changeTab={props.actions.changeTab}
             closeTab={props.actions.closeTab}
             currentTab={props.currentTab}

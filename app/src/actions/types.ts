@@ -7,7 +7,7 @@ type ActionType =
     'RECEIVE_MESSAGE' |
     'SEND_MESSAGE' |
     'WRITE_MESSAGE' |
-    'SHOW_CREDENTIALS_FORM' |
+    'CHANGE_VIEW_MODE' |
     'CHANGE_SERVER' |
     'CHANGE_TAB' |
     'CLOSE_TAB'

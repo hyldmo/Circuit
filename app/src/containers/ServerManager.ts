@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 import ServerManagerComponent from '../components/ServerManager'
-import { showForm, changeServer } from '../actions'
+import { changeViewMode, changeServer } from '../actions'
 
 const mapStateToProps = (state) => {
     return {
         connections: state.connections,
-        showForm: state.showForm
+        viewMode: state.viewMode
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: {
-            showForm: (show) => {
-                dispatch(showForm(show))
+            changeViewMode: (show) => {
+                dispatch(changeViewMode(show))
             },
             changeServer: (name) => {
                 dispatch(changeServer(name))
