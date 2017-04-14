@@ -10,6 +10,9 @@ const Login = (props: Credentials|any) => (
         <input className='input' type='text' placeholder='Username' value={props.username}
             onChange={e => props.actions.updateCredentials('username', e.currentTarget.value)}
         />
+        <input className='input' type='text' placeholder='Port' value={props.port}
+            onChange={e => props.actions.updateCredentials('port', e.currentTarget.value)}
+        />
         <button className='input input__btn' onClick={e => props.actions.connect(props)}>
             Connect
         </button>

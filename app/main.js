@@ -10,8 +10,10 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let ircServer
 
 function createWindow() {
+    ircServer = require('./irc/server');
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1600, height: 1080, icon: path.join(__dirname, 'assets/icon.png')})
 
@@ -45,6 +47,7 @@ app.on('window-all-closed', function () {
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
         app.quit()
+        ircServer.close();
     }
 })
 

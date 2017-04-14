@@ -24,7 +24,7 @@ function createAbortableSaga (saga) {
 
 const SagaManager = {
     startSagas(sagaMiddleware) {
-        sagas.map(createAbortableSaga).forEach((saga) => sagaMiddleware.run(saga));
+        sagas.map(createAbortableSaga).forEach((saga) => sagaMiddleware.run(saga))
     },
 
     cancelSagas(store) {

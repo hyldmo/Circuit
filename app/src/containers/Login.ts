@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import LoginComponent from '../components/Login'
-import { updateCredentials } from '../actions'
+import { updateCredentials, connect as connectToServer } from '../actions'
 import { Credentials, ComponentActions } from '../reducers/credentials'
 
 const mapStateToProps = (state): Credentials => {
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch): ComponentActions => {
                 dispatch(updateCredentials(field, value))
             },
             connect: (credentials: Credentials) => {
-                dispatch({type: 'CONNECT', credentials})
+                dispatch(connectToServer(credentials))
             }
         }
     }

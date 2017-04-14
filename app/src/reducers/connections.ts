@@ -1,10 +1,18 @@
 import { Action, ActionMeta } from '../actions/types'
 
+type TabAction = Action<number>
+type ConnectionAction = ActionMeta<string&IMessage, {server, channel}>
+
 export interface Connection {
     readonly server: string
-    readonly messages: Array<IMessage>
     readonly state: State
-    readonly userMessage: string
+    readonly channels: Array<Channel>
+}
+
+export interface Channel {
+    name: string
+    messages: Array<IMessage>
+    userMessage: string
 }
 
 export interface IMessage {
@@ -18,8 +26,8 @@ type State =
     'CONNECTED' |
     'DISCONNECTED'
 
-const connection = (state: Connection, action: ActionMeta<string&IMessage, string>): Connection => {
-    if (state.server !== action.meta)
+const channel = (state: Channel, action: ConnectionAction): Channel => {
+    if (state.name !== action.meta.channel)
         return state
 
     switch (action.type) {
@@ -46,20 +54,43 @@ const connection = (state: Connection, action: ActionMeta<string&IMessage, strin
     }
 }
 
-const connections = (state: Array<Connection> = [], action: ActionMeta<number&string&IMessage, string>): Array<Connection> => {
+const connection = (state: Connection, action: ConnectionAction): Connection => {
+    if (state.server !== action.meta.server)
+        return state
+
+    switch (action.type) {
+        case 'CONNECTING':
+            return {
+                ...state,
+                status: 'CONNECTING'
+            }
+        case 'WRITE_MESSAGE':
+        case 'SEND_MESSAGE':
+        case 'RECEIVE_MESSAGE':
+            return {
+                ...state,
+                channels: state.channels.map(c => channel(c, action))
+            }
+        default:
+            return state
+    }
+}
+
+const connections = (state: Array<Connection> = [], action: ConnectionAction&TabAction): Array<Connection> => {
     switch (action.type) {
         case 'CONNECTED':
             return [
                 ...state,
                 {
                     server: action.payload,
-                    messages: [],
                     state: 'CONNECTED',
-                    userMessage: ''
+                    channels: [{ name: 'STATUS', messages: [], userMessage: '' }]
                 }
             ]
         case 'CLOSE_TAB':
             return state.filter(c => c.server !== action.payload)
+
+        case 'CONNECTING':
         case 'RECEIVE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'WRITE_MESSAGE':

@@ -1,0 +1,25 @@
+.servers {
+    padding: 2rem .5rem 0 0;
+    
+    li {
+        @size: 3rem;
+        border-radius: 1rem;
+        background-color: @green-dark;
+        width: @size;
+        height: @size;
+        @border: 0.2rem;
+        border: @border solid @green-dark;
+        line-height: @size - (@border * 1.5);
+        margin-bottom: 0.5rem;
+        list-style: none;
+        text-align: center;
+        vertical-align: middle;
+        text-transform: capitalize; 
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            border-color: @green;
+        }
+    }
+}

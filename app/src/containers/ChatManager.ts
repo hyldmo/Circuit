@@ -4,8 +4,7 @@ import { sendMessage, writeMessage, showForm, changeTab, closeTab } from '../act
 
 const mapStateToProps = (state) => {
     return {
-        connections: state.connections,
-        showForm: state.showForm,
+        channels: state.connections.find(c => c.server === state.currentServer).channels,
         currentTab: state.currentTab
     }
 }

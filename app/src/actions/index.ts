@@ -1,5 +1,6 @@
 import { Action, ActionMeta } from './types'
 import { IMessage } from '../reducers/connections'
+import { Credentials } from '../reducers/credentials'
 
 export function updateCredentials (field: string, value: string|number): ActionMeta<string|number, string> {
     return {
@@ -25,10 +26,17 @@ export function sendMessage (server: string, message: string): ActionMeta<string
     }
 }
 
-export function connecting (server: string): Action<string> {
+export function connect (credentials: Credentials): Action<Credentials> {
+    return {
+        type: 'CONNECT',
+        payload: credentials
+    }
+}
+
+export function connecting (server: string): ActionMeta<undefined, {server}> {
     return {
         type: 'CONNECTING',
-        payload: server
+        meta: {server}
     }
 }
 
@@ -39,10 +47,10 @@ export function connected (server: string): Action<string> {
     }
 }
 
-export function receive (server: string, message: IMessage): ActionMeta<IMessage, string> {
+export function receive (server: string, channel: string, message: IMessage): ActionMeta<IMessage, { server, channel }> {
     return {
         type: 'RECEIVE_MESSAGE',
-        meta: server,
+        meta: {server, channel},
         payload: message
     }
 }
@@ -51,6 +59,13 @@ export function showForm (show: boolean): Action<boolean> {
     return {
         type: 'SHOW_CREDENTIALS_FORM',
         payload: show
+    }
+}
+
+export function changeServer (server: string): Action<string> {
+    return {
+        type: 'CHANGE_SERVER',
+        payload: server
     }
 }
 

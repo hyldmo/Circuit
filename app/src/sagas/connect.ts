@@ -1,33 +1,28 @@
-///<reference path="../../../node_modules/redux-saga/index.d.ts"/>
 import { Credentials } from '../reducers/credentials'
 import { eventChannel, takeEvery, channel, Task } from 'redux-saga'
 import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
 import { receive, connected, connecting } from '../actions'
 import { Action, ActionMeta } from '../actions/types'
+import parse from '../../irc/parse'
 
 
 export default function* watchConnects () {
     yield takeEvery('CONNECT', connectToServer)
 }
 
-function* connectToServer (credentials: Credentials) {
+function* connectToServer (action: Action<Credentials>) {
     try {
-        // const socket = new WebSocket(`ws://${credentials.server}:${credentials.port}`)
-        const socket = new WebSocket(`ws://echo.websocket.org?key=${Math.floor(Math.random() * 100)}`)
+        const { server, port, username, password } = action.payload
+        const socket = new WebSocket(`ws://localhost:31130?server=${server}&port=${port}&username=${username}&password=${password}`)
         yield put(connecting(socket.url))
         const channel = yield call(connectChannel, socket)
 
         while (true) {
             yield take(channel)
             yield put(connected(socket.url))
-            console.log(`Connected to ${socket.url}`)
-            // Pretend server said hello TODO: Remove this
-            socket.send('Connection successful. I will repeat anything you say.')
             const userMessageTask = yield fork(watchUserSentMessages, socket)
             const messageTask = yield fork(watchMessages, socket)
-            yield take((action: Action<string>) => {
-                return action.type === 'CLOSE_TAB' && action.payload === socket.url
-            })
+            yield take((action: Action<string>) =>  action.type === 'CLOSE_TAB' && action.payload === socket.url)
             yield cancel(userMessageTask)
             yield cancel(messageTask)
         }
@@ -37,14 +32,14 @@ function* connectToServer (credentials: Credentials) {
 }
 
 function* watchMessages (socket: WebSocket) {
-    const channel = yield call(messageChannel, socket)
+    const msgChannel = yield call(messageChannel, socket)
     try {
         while (true) {
-            let message = yield take(channel)
-            yield put(receive(socket.url, {
-                sender: '<server>',
-                timestamp: Date.now(),
-                message
+            const { sender, channel, message } = yield take(msgChannel)
+            yield put(receive(socket.url, channel, {
+                sender,
+                message,
+                timestamp: Date.now()
             }))
         }
     } finally {
@@ -79,7 +74,16 @@ function* connectChannel(socket: WebSocket) {
 function* messageChannel(socket: WebSocket) {
     return eventChannel(emitter => {
         socket.onmessage = event => {
-            emitter(event.data)
+            const result = parse(event.data)
+            if (result)
+                emitter(result)
+            else
+                emitter({
+                    sender: '<server>',
+                    channel: 'STATUS',
+                    message: event.data
+                })
+            // TODO: Handle non-irc message events
         }
         return socket.close
     })

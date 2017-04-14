@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Login from '../containers/Login'
-import ChatManager from '../containers/ChatManager'
+import ServerManager from '../containers/ServerManager'
 import {Connection} from '../reducers/connections'
 
 export interface AppProps {
@@ -9,7 +9,7 @@ export interface AppProps {
 
 const App = (props: AppProps) => {
     if (props.connections.length > 0) {
-        return <ChatManager/>
+        return <ServerManager />
     } else {
         return (
             <div>
