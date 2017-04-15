@@ -1,19 +1,21 @@
 import { connect } from 'react-redux'
-import ChatComponent from '../components/ChatManager'
+import ChatComponent, { ChatManagerProps } from '../components/ChatManager'
 import { sendMessage, writeMessage, changeViewMode, changeTab, closeTab } from '../actions'
+import { State } from '../reducers'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
+    const server = state.connections.find(c => c.server === state.currentServer)
     return {
-        channels: state.connections.find(c => c.server === state.currentServer).channels,
-        currentTab: state.currentTab
+        currentTab: server.currentChannel,
+        channels: server.channels
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: {
-            writeMessage: (server, message) => {
-                dispatch(writeMessage(server, message))
+            writeMessage: (server, channel, message) => {
+                dispatch(writeMessage(server, channel, message))
             },
             sendMessage: (server, message) => {
                 dispatch(sendMessage(server, message))
@@ -21,8 +23,8 @@ const mapDispatchToProps = (dispatch) => {
             changeViewMode: (show) => {
                 dispatch(changeViewMode(show))
             },
-            changeTab: (index) => {
-                dispatch(changeTab(index))
+            changeTab: (name, server) => {
+                dispatch(changeTab(name, server))
             },
             closeTab: (url) => {
                 dispatch(closeTab(url))

@@ -1,13 +1,14 @@
 import * as React from 'react'
 import Login from '../containers/Login'
-import Chat from './Chat'
+import Chat from '../containers/Chat'
 import ChatTabs from './ChatTabs'
-import { Connection, Channel } from '../reducers/connections'
+import { Connection } from '../reducers/connections'
 import { ViewMode } from '../reducers/viewMode'
+import { Channel } from '../reducers/channel'
 
 export interface ChatManagerProps {
-    channels: Array<Channel>
-    currentTab: number
+    channels: Channel[]
+    currentTab: string
     actions: {
         writeMessage: Function
         sendMessage: Function
@@ -20,12 +21,12 @@ export interface ChatManagerProps {
 const ChatManager = (props: ChatManagerProps) => (
     <div className='channels'>
         <ChatTabs tabs={props.channels.map(c => c.name)}
+            currentTab={props.currentTab}
             changeViewMode={props.actions.changeViewMode}
             changeTab={props.actions.changeTab}
             closeTab={props.actions.closeTab}
-            currentTab={props.currentTab}
         />
-        <Chat { ...props.channels[props.currentTab] } actions={props.actions} />
+        <Chat />
     </div>
 )
 export default ChatManager

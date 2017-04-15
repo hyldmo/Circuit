@@ -1,24 +1,26 @@
 import * as React from 'react'
 import Login from '../containers/Login'
+import AddChannel from './AddChannel'
 import Chat from './Chat'
 import ChatManager from '../containers/ChatManager'
-import { Connection, Channel } from '../reducers/connections'
+import { Connection } from '../reducers/connections'
 import { parseName } from './ChatTab'
 import { ViewMode } from '../reducers/viewMode'
 
 export interface ServerManagerProps {
-    connections: Array<Connection>
+    connections: Connection[]
     viewMode: ViewMode
     actions: {
-        changeViewMode: (channel: ViewMode) => void
-        changeServer: Function
+        changeViewMode(viewMode: ViewMode)
+        addChannels(channels: string[])
+        changeServer(name: string)
     }
 }
 
-const viewModeComponent = (viewMode: ViewMode) => {
-    switch (viewMode) {
+const viewModeComponent = (props: ServerManagerProps) => {
+    switch (props.viewMode) {
         case 'ADD_CHANNEL':
-            return null
+            return <AddChannel onSubmit={cs => props.actions.addChannels(cs)} />
         case 'ADD_SERVER':
             return <Login />
         case 'DEFAULT':
@@ -30,7 +32,7 @@ const ServerManager = (props: ServerManagerProps) => (
     <div className='chats'>
         <div className={`modal ${props.viewMode !== 'DEFAULT' ? 'visible' : 'hidden'}` }>
             <div className='overlay' onClick={e => props.actions.changeViewMode('DEFAULT') }/>
-            {viewModeComponent(props.viewMode)}
+            {viewModeComponent(props)}
         </div>
         <ul className='servers'>
             {props.connections.map(conn => (

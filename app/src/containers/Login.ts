@@ -2,8 +2,9 @@ import { connect } from 'react-redux'
 import LoginComponent from '../components/Login'
 import { updateCredentials, connect as connectToServer } from '../actions'
 import { Credentials, ComponentActions } from '../reducers/credentials'
+import { State } from '../reducers'
 
-const mapStateToProps = (state): Credentials => {
+const mapStateToProps = (state: State): Credentials => {
     return {
         username: state.credentials.username,
         password: state.credentials.password,

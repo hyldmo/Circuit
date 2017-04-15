@@ -1,58 +1,20 @@
 import { Action, ActionMeta } from '../actions/types'
+import channel, { Channel, IMessage } from './channel'
 
 type TabAction = Action<number>
-type ConnectionAction = ActionMeta<string&IMessage, {server, channel}>
+export type ConnectionAction = ActionMeta<string&IMessage, {server, channel}>
 
 export interface Connection {
     readonly server: string
     readonly state: State
-    readonly channels: Array<Channel>
-}
-
-export interface Channel {
-    name: string
-    messages: Array<IMessage>
-    userMessage: string
-}
-
-export interface IMessage {
-    readonly message: string,
-    readonly timestamp: number
-    readonly sender: string
+    readonly channels: Channel[]
+    readonly currentChannel: string
 }
 
 type State =
     'CONNECTING' |
     'CONNECTED' |
     'DISCONNECTED'
-
-const channel = (state: Channel, action: ConnectionAction): Channel => {
-    if (state.name !== action.meta.channel)
-        return state
-
-    switch (action.type) {
-        case 'WRITE_MESSAGE':
-            return {
-                ...state,
-                userMessage: action.payload
-            }
-        case 'SEND_MESSAGE':
-            return {
-                ...state,
-                userMessage: ''
-            }
-        case 'RECEIVE_MESSAGE':
-            return {
-                ...state,
-                messages: [
-                    ...state.messages,
-                    action.payload
-                ]
-            }
-        default:
-            return state
-    }
-}
 
 const connection = (state: Connection, action: ConnectionAction): Connection => {
     if (state.server !== action.meta.server)
@@ -63,6 +25,11 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
             return {
                 ...state,
                 status: 'CONNECTING'
+            }
+        case 'CHANGE_TAB':
+           return {
+                ...state,
+                currentChannel: action.payload
             }
         case 'WRITE_MESSAGE':
         case 'SEND_MESSAGE':
@@ -76,7 +43,7 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
     }
 }
 
-const connections = (state: Array<Connection> = [], action: ConnectionAction&TabAction): Array<Connection> => {
+const connections = (state: Connection[] = [], action: ConnectionAction&TabAction): Connection[] => {
     switch (action.type) {
         case 'CONNECTED':
             return [
@@ -84,7 +51,8 @@ const connections = (state: Array<Connection> = [], action: ConnectionAction&Tab
                 {
                     server: action.payload,
                     state: 'CONNECTED',
-                    channels: [{ name: 'STATUS', messages: [], userMessage: '' }]
+                    channels: [{ name: 'STATUS', messages: [], userMessage: '' }],
+                    currentChannel: 'STATUS'
                 }
             ]
         case 'CLOSE_TAB':
@@ -94,6 +62,7 @@ const connections = (state: Array<Connection> = [], action: ConnectionAction&Tab
         case 'RECEIVE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'WRITE_MESSAGE':
+        case 'CHANGE_TAB':
             return state.map(c => connection(c, action))
         default:
             return state

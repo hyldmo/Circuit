@@ -3,9 +3,9 @@ import ChatTab from './ChatTab'
 import { ViewMode } from '../reducers/viewMode'
 
 export interface ChatTabProps {
-    tabs: Array<string>
-    currentTab: number
-    changeViewMode: (channel: ViewMode) => void
+    tabs: string[]
+    currentTab: string
+    changeViewMode: (viewMode: ViewMode) => void
     changeTab: Function
     closeTab: Function
 }
@@ -13,7 +13,14 @@ export interface ChatTabProps {
 const ChatTabs = (props: ChatTabProps) => (
     <ul className='tabs'>
         {props.tabs.map((tab, index) =>
-            <ChatTab key={index} name={tab} isActive={props.currentTab === index} index={index} changeTab={props.changeTab} closeTab={props.closeTab} showClose={props.tabs.length > 1} />
+            <ChatTab key={index}
+                name={tab}
+                isActive={props.currentTab === tab}
+                index={index}
+                changeTab={props.changeTab}
+                closeTab={props.closeTab}
+                showClose={props.tabs.length > 1}
+            />
         )}
         <li className='tabs__add' key='+' onClick={e => props.changeViewMode('ADD_CHANNEL')}>+</li>
     </ul>
