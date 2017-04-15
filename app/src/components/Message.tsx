@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { IMessage } from '../reducers/connections'
+import { IMessage } from '../reducers/channel'
 
 const Message = (props: IMessage) => (
     <li className='message'>

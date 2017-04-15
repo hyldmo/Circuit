@@ -4,7 +4,7 @@ import ServerManager from '../containers/ServerManager'
 import {Connection} from '../reducers/connections'
 
 export interface AppProps {
-    connections: Array<Connection>
+    connections: Connection[]
 }
 
 const App = (props: AppProps) => {

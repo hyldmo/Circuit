@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import AppComponent, { AppProps } from '../components/App'
+import { Connection } from '../reducers/connections'
+import { State } from '../reducers'
 
-const mapStateToProps = (state): AppProps => {
+const mapStateToProps = (state: State): AppProps => {
     return {
         connections: state.connections
     }

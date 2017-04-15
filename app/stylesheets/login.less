@@ -18,7 +18,19 @@
 
 .login {
     margin: auto;
-    width: 300px;
+    width: 25rem;
+
+    & > div {
+        display: flex;
+        flex-direction: column nowrap;
+
+        & > .input {
+            &:last-child {
+                margin-right: 0;            
+            }
+        }
+        
+    } 
 }
 
 .modal {
