@@ -1,9 +1,16 @@
 import { ConnectionAction } from './connections'
+import { getRandomColor } from '../utils/color'
 
 export interface Channel {
     readonly name: string
     readonly messages: IMessage[]
     readonly userMessage: string
+    readonly users: User[]
+}
+
+export interface User {
+    color: string
+    name: string
 }
 
 export interface IMessage {
@@ -26,7 +33,24 @@ export default function channel (state: Channel, action: ConnectionAction): Chan
             return {
                 ...state,
                 userMessage: '',
+                messages: [
+                    ...state.messages,
+                    {
+                        message: action.payload,
+                        sender: 'You',
+                        timestamp: Date.now()
+                    }
+                ]
             }
+        case 'GET_USERS': {
+            return {
+                ...state,
+                users: action.payload.map(user => ({
+                    name: user,
+                    color: getRandomColor()
+                }))
+            }
+        }
         case 'RECEIVE_MESSAGE':
             return {
                 ...state,

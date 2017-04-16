@@ -3,6 +3,7 @@ import { IMessage } from '../reducers/channel'
 import { Credentials } from '../reducers/credentials'
 import { ViewMode } from '../reducers/viewMode'
 
+export * from './chat'
 export * from './connect'
 export * from './tabs'
 
@@ -14,31 +15,6 @@ export function updateCredentials (field: string, value: string|number): ActionM
     }
 }
 
-export function writeMessage (server: string, channel: string, message: string): ActionMeta<string, {server, channel}> {
-    return {
-        type: 'WRITE_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
-}
-
-export function sendMessage (server: string, channel: string, message: string): ActionMeta<string, {server, channel}> {
-    return {
-        type: 'SEND_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
-}
-
-
-
-export function receive (server: string, channel: string, message: IMessage): ActionMeta<IMessage, { server, channel }> {
-    return {
-        type: 'RECEIVE_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
-}
 
 export function changeViewMode (viewMode: ViewMode): Action<ViewMode> {
     return {

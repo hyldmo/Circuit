@@ -12,7 +12,8 @@ type ActionType =
     'CHANGE_VIEW_MODE' |
     'CHANGE_SERVER' |
     'CHANGE_TAB' |
-    'CLOSE_TAB'
+    'CLOSE_TAB' |
+    'GET_USERS'
 
 export interface Action<T> extends ReduxActions.Action<T> {
     readonly type: ActionType

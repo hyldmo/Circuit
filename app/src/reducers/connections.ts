@@ -2,7 +2,7 @@ import { Action, ActionMeta } from '../actions/types'
 import channel, { Channel, IMessage } from './channel'
 
 type TabAction = Action<number>
-export type ConnectionAction = ActionMeta<string&IMessage, {server, channel}>
+export type ConnectionAction = ActionMeta<string&string[]&IMessage, {server, channel}>
 
 export interface Connection {
     readonly server: string
@@ -29,7 +29,8 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
                     {
                         messages: [],
                         name: action.payload,
-                        userMessage: ''
+                        userMessage: '',
+                        users: []
                     }
                 ]
             }
@@ -46,6 +47,7 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
         case 'WRITE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'RECEIVE_MESSAGE':
+        case 'GET_USERS':
             return {
                 ...state,
                 channels: state.channels.map(c => channel(c, action))
@@ -63,7 +65,7 @@ const connections = (state: Connection[] = [], action: ConnectionAction&TabActio
                 {
                     server: action.payload,
                     state: 'CONNECTED',
-                    channels: [{ name: 'STATUS', messages: [], userMessage: '' }],
+                    channels: [{ name: 'STATUS', messages: [], userMessage: '', users: [] }],
                     currentChannel: 'STATUS'
                 }
             ]
@@ -76,6 +78,7 @@ const connections = (state: Connection[] = [], action: ConnectionAction&TabActio
         case 'WRITE_MESSAGE':
         case 'CHANGE_TAB':
         case 'TAB_ADDED':
+        case 'GET_USERS':
             return state.map(c => connection(c, action))
         default:
             return state

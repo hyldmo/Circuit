@@ -1,30 +1,12 @@
 import * as WebSocket from 'ws'
 import * as url from 'url'
 import * as irc from 'irc'
+import { CMD, COMMAND, paramSep } from './commands'
+
 
 const options = {
     port: 31130
 }
-
-export const paramSep = '_-_'
-export type COMMAND = 'MSG' |
-    'ACTION' |
-    'QUERY' |
-    'NOTICE' |
-    'JOIN' |
-    'PART' |
-    'KICK' |
-    'NICK' |
-    'TOPIC' |
-    'WHOIS' |
-    'WHOWAS' |
-    'CTCP' |
-    'QUOTE' |
-    'CLEAR' |
-    'IGNORE' |
-    'UNIGNORE' |
-    'PONG'
-
 
 interface RawMessage {
     prefix?: string // The prefix for the message (optional)
@@ -40,6 +22,8 @@ interface RawMessage {
 
 const wss = new WebSocket.Server(options)
 console.log(`Listening for websocket connections on port ${options.port}`)
+
+
 
 wss.on('connection', ws => {
     const send = (message) => { ws.send(message, err => { if (err) console.error(err) }) }
@@ -58,8 +42,15 @@ wss.on('connection', ws => {
         send(`Connected to ${server}:${port} (${message.command})`)
     })
 
+    client.addListener('message', function (from: string, to: string, msg: string) {
+        const command = to.startsWith('#') ? 'MSG' : 'PRIVMSG'
+        const message = [CMD, command, from, to, msg].join(paramSep)
+        send(message)
+    })
+
     client.addListener('raw', (msg: RawMessage) => {
-        send(['$CMD$', msg.command, ...msg.args].join(paramSep))
+        const message = [CMD, msg.command.toUpperCase(), ...msg.args].join(paramSep)
+        send(message)
     })
 
     client.addListener('error', (message: RawMessage) => {

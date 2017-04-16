@@ -20,32 +20,47 @@
     // TODO: Figure out why this is needed
     padding-bottom: 10px;
     height: 100%;
-    width: 95%;
     display: flex;
     flex-flow: column nowrap;
+    &__window {
 
-    &__messages {
-        margin: 0;
-        background-color: @green-dark;
         height: 100%;
-        border-radius: 0.5em;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        padding-left: .2rem;
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
 
-        list-style: none;
-        li {
-            border-bottom: 1px solid fade(@green-darker, 40%);
+        &__users {
+            margin: 0 0 0 1rem;
+            padding: 1rem;
+            list-style: none;
+            width: 10rem;
+            background-color: @green-dark;
+            flex-grow: 0;
+            border-radius: 0.5rem;
         }
+        &__messages {
+            flex-grow: 1;
+            margin: 0;
+            background-color: @green-dark;
+            height: 100%;
+            border-radius: 0.5rem;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding-left: .2rem;
 
-        .message {
-             word-wrap: break-word;
-            .timestamp {
-                color: @tea-dark-desat;
+            list-style: none;
+            li {
+                border-bottom: 1px solid fade(@green-darker, 40%);
+            }
+
+            .message {
+                word-wrap: break-word;
+                .timestamp {
+                    color: @tea-dark-desat;
+                }
             }
         }
     }
-
     &__box {
         margin-top: 1em;
         display: flex;
