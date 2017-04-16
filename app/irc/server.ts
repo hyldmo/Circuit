@@ -6,6 +6,26 @@ const options = {
     port: 31130
 }
 
+export const paramSep = '_-_'
+export type COMMAND = 'MSG' |
+    'ACTION' |
+    'QUERY' |
+    'NOTICE' |
+    'JOIN' |
+    'PART' |
+    'KICK' |
+    'NICK' |
+    'TOPIC' |
+    'WHOIS' |
+    'WHOWAS' |
+    'CTCP' |
+    'QUOTE' |
+    'CLEAR' |
+    'IGNORE' |
+    'UNIGNORE' |
+    'PONG'
+
+
 interface RawMessage {
     prefix?: string // The prefix for the message (optional)
     nick?: string // The nickname portion of the prefix (optional)
@@ -22,6 +42,7 @@ const wss = new WebSocket.Server(options)
 console.log(`Listening for websocket connections on port ${options.port}`)
 
 wss.on('connection', ws => {
+    const send = (message) => { ws.send(message, err => { if (err) console.error(err) }) }
     const { server, port, username, password } = url.parse(ws.upgradeReq.url, true).query
     const client = new irc.Client(server, username, {
         port,
@@ -29,30 +50,26 @@ wss.on('connection', ws => {
         debug: true,
         autoRejoin: true
     })
+
     console.log(`Connecting to ${server}:${port}`)
-    ws.send(`Connecting to ${server}:${port}`)
+    send(`Connecting to ${server}:${port}`)
 
     client.addListener('registered', function (message: RawMessage) {
-        ws.send(`Connected to ${server}:${port} (${message.command})`)
-    })
-
-    client.addListener('message', (from, to, message) => {
-        ws.send(`${from}=>${to}:${message}`)
+        send(`Connected to ${server}:${port} (${message.command})`)
     })
 
     client.addListener('raw', (msg: RawMessage) => {
-        if (msg.commandType !== 'reply') return
-        ws.send(msg.args.slice(1).join(' '))
+        console.log(msg)
+        send(['$CMD$', msg.command, msg.args.slice(1)].join(paramSep))
     })
 
     client.addListener('error', (message: RawMessage) => {
-        ws.send(message.command)
+        send(message.command)
     })
+})
 
-    ws.on('message', message => {
-        client.say('###test', message)
-        ws.send(message)
-    })
+wss.on('error', (error) => {
+    console.warn(error)
 })
 
 export default wss

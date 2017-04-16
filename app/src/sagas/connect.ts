@@ -3,6 +3,7 @@ import { eventChannel, takeEvery, channel, Task } from 'redux-saga'
 import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
 import { receive, connected, connecting } from '../actions'
 import { Action, ActionMeta } from '../actions/types'
+import watchMessages from './watchMessages'
 import parse from '../../irc/parse'
 
 
@@ -31,21 +32,6 @@ function* connectToServer (action: Action<Credentials>) {
     }
 }
 
-function* watchMessages (socket: WebSocket) {
-    const msgChannel = yield call(messageChannel, socket)
-    try {
-        while (true) {
-            const { sender, channel, message } = yield take(msgChannel)
-            yield put(receive(socket.url, channel, {
-                sender,
-                message,
-                timestamp: Date.now()
-            }))
-        }
-    } finally {
-        console.log(`Stopped watching messages from ${socket.url}`)
-    }
-}
 
 function* watchUserSentMessages (socket: WebSocket) {
     try {
@@ -71,21 +57,4 @@ function* connectChannel(socket: WebSocket) {
 }
 
 
-function* messageChannel(socket: WebSocket) {
-    return eventChannel(emitter => {
-        socket.onmessage = event => {
-            const result = parse(event.data)
-            if (result)
-                emitter(result)
-            else
-                emitter({
-                    sender: '<server>',
-                    channel: 'STATUS',
-                    message: event.data
-                })
-            // TODO: Handle non-irc message events
-        }
-        return socket.close
-    })
-}
 
