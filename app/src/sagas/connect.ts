@@ -36,10 +36,10 @@ function* connectToServer (action: Action<Credentials>) {
 function* watchUserSentMessages (socket: WebSocket) {
     try {
         while (true) {
-            let { payload } = yield take((action: ActionMeta<string, string>) => {
-                return action.type === 'SEND_MESSAGE' && action.meta === socket.url
+            let { payload, meta } = yield take((action: ActionMeta<string, {channel, server}>) => {
+                return action.type === 'SEND_MESSAGE' && action.meta.server === socket.url
             })
-            socket.send(payload)
+            socket.send(`${meta.channel}=>${payload}`)
         }
     } finally {
         console.log(`Stopped watching messages to ${socket.url}`)

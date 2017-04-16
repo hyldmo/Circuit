@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
             writeMessage: (server, channel, message) => {
                 dispatch(writeMessage(server, channel, message))
             },
-            sendMessage: (server, message) => {
-                dispatch(sendMessage(server, message))
+            sendMessage: (server, channel, message) => {
+                dispatch(sendMessage(server, channel, message))
             },
         }
     }

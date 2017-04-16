@@ -4,13 +4,9 @@
 
 .chats {
     margin: 1rem;
-    height: 100%;
     display: flex;
     flex-flow: row nowrap;
-
-    & > div {
-        height: 100%;
-    }
+    overflow-x: hidden;
 }
 
 .channels {
@@ -24,6 +20,7 @@
     // TODO: Figure out why this is needed
     padding-bottom: 10px;
     height: 100%;
+    width: 95%;
     display: flex;
     flex-flow: column nowrap;
 
@@ -34,7 +31,7 @@
         border-radius: 0.5em;
         overflow-y: scroll;
         overflow-x: hidden;
-        padding-left: 0;
+        padding-left: .2rem;
 
         list-style: none;
         li {
@@ -42,6 +39,7 @@
         }
 
         .message {
+             word-wrap: break-word;
             .timestamp {
                 color: @tea-dark-desat;
             }

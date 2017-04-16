@@ -1,6 +1,6 @@
 import { eventChannel, takeEvery, channel, Task } from 'redux-saga'
 import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
-import { receive, connected, connecting } from '../actions'
+import { receive, connected, connecting, tabAdded } from '../actions'
 import {paramSep, COMMAND} from '../../irc/server'
 import parse from '../../irc/parse'
 
@@ -13,10 +13,9 @@ export default function* watchMessages (socket: WebSocket) {
             if (message.startsWith('$CMD$')) {
                 const args: string[] = message.split('_-_').slice(1)
                 const command = args.shift() as COMMAND
-                console.log(args)
                 switch (command) {
                     case 'JOIN':
-                        // TODO
+                        yield put(tabAdded(args[0], socket.url))
                         break
                     case 'MSG':
                         const { message, channel, sender } = parse(args[args.length - 1])

@@ -59,8 +59,7 @@ wss.on('connection', ws => {
     })
 
     client.addListener('raw', (msg: RawMessage) => {
-        console.log(msg)
-        send(['$CMD$', msg.command, msg.args.slice(1)].join(paramSep))
+        send(['$CMD$', msg.command, ...msg.args].join(paramSep))
     })
 
     client.addListener('error', (message: RawMessage) => {

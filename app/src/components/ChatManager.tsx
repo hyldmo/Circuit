@@ -6,9 +6,9 @@ import { Connection } from '../reducers/connections'
 import { ViewMode } from '../reducers/viewMode'
 import { Channel } from '../reducers/channel'
 
-export interface ChatManagerProps {
-    channels: Channel[]
-    currentTab: string
+export type ChatManagerProps = Connection&PartialChatManagerProps
+
+interface PartialChatManagerProps {
     actions: {
         writeMessage: Function
         sendMessage: Function
@@ -21,9 +21,9 @@ export interface ChatManagerProps {
 const ChatManager = (props: ChatManagerProps) => (
     <div className='channels'>
         <ChatTabs tabs={props.channels.map(c => c.name)}
-            currentTab={props.currentTab}
+            currentTab={props.currentChannel}
             changeViewMode={props.actions.changeViewMode}
-            changeTab={props.actions.changeTab}
+            changeTab={name => props.actions.changeTab(name, props.server)}
             closeTab={props.actions.closeTab}
         />
         <Chat />

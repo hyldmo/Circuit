@@ -1,4 +1,6 @@
 type ActionType =
+    'ADD_TABS' |
+    'TAB_ADDED' |
     'UPDATE_CREDENTIALS' |
     'CONNECT' |
     'CONNECTING' |

@@ -6,8 +6,7 @@ import { State } from '../reducers'
 const mapStateToProps = (state: State) => {
     const server = state.connections.find(c => c.server === state.currentServer)
     return {
-        currentTab: server.currentChannel,
-        channels: server.channels
+        ...server
     }
 }
 
@@ -17,8 +16,8 @@ const mapDispatchToProps = (dispatch) => {
             writeMessage: (server, channel, message) => {
                 dispatch(writeMessage(server, channel, message))
             },
-            sendMessage: (server, message) => {
-                dispatch(sendMessage(server, message))
+            sendMessage: (server, channel, message) => {
+                dispatch(sendMessage(server, channel, message))
             },
             changeViewMode: (show) => {
                 dispatch(changeViewMode(show))

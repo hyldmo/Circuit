@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-const ChatTab = ({name, isActive, index, changeTab, closeTab, showClose}) => (
+const ChatTab = ({name, isActive, changeTab, closeTab, showClose}) => (
     <div>
         <li className={isActive ? 'active' : 'inactive'}
-            onClick={e => { if (!isActive) changeTab(index)}} >
+            onClick={e => { if (!isActive) changeTab(name)}} >
             <span>{parseName(name)}</span>
             {showClose &&
                 <button className='btn--close'  onClick={e => { e.stopPropagation(); closeTab(name) }}>

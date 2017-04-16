@@ -25,7 +25,7 @@ export default function channel (state: Channel, action: ConnectionAction): Chan
         case 'SEND_MESSAGE':
             return {
                 ...state,
-                userMessage: ''
+                userMessage: '',
             }
         case 'RECEIVE_MESSAGE':
             return {

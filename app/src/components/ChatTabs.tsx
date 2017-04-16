@@ -16,7 +16,6 @@ const ChatTabs = (props: ChatTabProps) => (
             <ChatTab key={index}
                 name={tab}
                 isActive={props.currentTab === tab}
-                index={index}
                 changeTab={props.changeTab}
                 closeTab={props.closeTab}
                 showClose={props.tabs.length > 1}

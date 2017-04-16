@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ServerManagerComponent from '../components/ServerManager'
-import { changeViewMode, changeServer } from '../actions'
+import { changeViewMode, changeServer, addTabs } from '../actions'
 import { State } from '../reducers'
 
 const mapStateToProps = (state: State) => {
@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
             changeServer: (name) => {
                 dispatch(changeServer(name))
             },
-            addChannels: (channels) => {
-                dispatch() // TODO
+            addChannels: (channels, server) => {
+                dispatch(addTabs(channels, server)) // TODO
             }
         }
     }

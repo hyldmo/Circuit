@@ -7,8 +7,8 @@ export type ChatProps = PartialChatProps&Channel
 interface PartialChatProps  {
     server: string
     actions: {
-        writeMessage: (server: string, channel: string, message: string) => void
-        sendMessage: Function
+        writeMessage(server: string, channel: string, message: string)
+        sendMessage(server: string, channel: string, message: string)
     }
 }
 
@@ -23,8 +23,8 @@ const Chat = (props: ChatProps) => (
         <div className='chat__box'>
             <input className='input' placeholder='Write message...' value={props.userMessage}
                 onChange={e => props.actions.writeMessage(props.server, props.name, e.currentTarget.value)}
-                onKeyDown={e => { console.log(e.key); if (e.key === 'Enter') props.actions.sendMessage(props.server, props.userMessage)}} />
-            <button className='input input__btn' onClick={e => props.actions.sendMessage(props.server, props.userMessage)}>
+                onKeyDown={e => { console.log(e.key); if (e.key === 'Enter') props.actions.sendMessage(props.server, props.name, props.userMessage)}} />
+            <button className='input input__btn' onClick={e => props.actions.sendMessage(props.server, props.name, props.userMessage)}>
                 Send
             </button>
         </div>

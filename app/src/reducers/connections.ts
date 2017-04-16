@@ -21,6 +21,18 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
         return state
 
     switch (action.type) {
+        case 'TAB_ADDED':
+            return {
+                ...state,
+                channels: [
+                    ...state.channels,
+                    {
+                        messages: [],
+                        name: action.payload,
+                        userMessage: ''
+                    }
+                ]
+            }
         case 'CONNECTING':
             return {
                 ...state,
@@ -57,12 +69,13 @@ const connections = (state: Connection[] = [], action: ConnectionAction&TabActio
             ]
         case 'CLOSE_TAB':
             return state.filter(c => c.server !== action.payload)
-
+        case 'CHANGE_TAB':
         case 'CONNECTING':
         case 'RECEIVE_MESSAGE':
         case 'SEND_MESSAGE':
         case 'WRITE_MESSAGE':
         case 'CHANGE_TAB':
+        case 'TAB_ADDED':
             return state.map(c => connection(c, action))
         default:
             return state
