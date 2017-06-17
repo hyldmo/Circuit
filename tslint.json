@@ -14,6 +14,7 @@
         "no-internal-module": true,
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
+        "no-unused-variable": [true, {"ignore-pattern": "^_"}],
         "no-var-keyword": true,
         "one-line": [
             true,
@@ -29,8 +30,7 @@
             "never"
         ],
         "triple-equals": [
-            true,
-            "allow-null-check"
+            true
         ],
         "typedef-whitespace": [
             true,

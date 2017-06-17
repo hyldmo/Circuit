@@ -7,7 +7,7 @@ module.exports = Object.assign({}, CONFIG, {
     module: {
         rules: [
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 loader: 'ts-loader'
             }
         ]
