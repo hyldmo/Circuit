@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import credentials, { Credentials } from './credentials'
 import connections, { Connection } from './connections'
+import credentials, { Credentials } from './credentials'
 import currentServer from './currentServer'
 import viewMode, { ViewMode } from './viewMode'
 
-export interface State {
+export type State = {
     connections: Connection[]
     currentServer: string
     viewMode: ViewMode

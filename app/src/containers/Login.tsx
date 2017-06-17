@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { updateCredentials, connect as connectToServer } from '../actions'
+import { connect as connectToServer, updateCredentials } from '../actions'
 import { State } from '../reducers'
 import { Credentials } from '../reducers/credentials'
 

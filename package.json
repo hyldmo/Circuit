@@ -8,7 +8,7 @@
     "production": "webpack --config webpack.production.config.js",
     "dev": "cross-env NODE_ENV=development node app/dev-server.js",
     "dev-server": "webpack-dev-server --config webpack.development.config.js --port 1337 --progress --colors --hot --inline --watch",
-    "lint": "tslint app/**/*.ts --type-check"
+    "lint": "tslint app/src/** --type-check -p ./"
   },
   "repository": "https://github.com/eivhyl/Circuit",
   "keywords": [

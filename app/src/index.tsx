@@ -2,8 +2,8 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import App from './containers/App'
 import configureStore from './configureStore'
+import App from './containers/App'
 
 const initialState = {
     credentials: {

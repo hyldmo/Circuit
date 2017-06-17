@@ -1,10 +1,10 @@
-import { Action, ActionMeta } from '../actions/types'
-import channel, { Channel, IMessage } from './channel'
+import { IAction, IActionMeta } from '../actions/types'
+import channel, { Channel, Message } from './channel'
 
-type TabAction = Action<number>
-export type ConnectionAction = ActionMeta<string&string[]&IMessage, {server, channel}>
+type TabAction = IAction<number>
+export type ConnectionAction = IActionMeta<string&string[]&Message, {server, channel}>
 
-export interface Connection {
+export type Connection = {
     readonly server: string
     readonly state: State
     readonly channels: Channel[]

@@ -2,12 +2,12 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { changeViewMode, changeServer, addTabs } from '../actions'
+import { addTabs, changeServer, changeViewMode } from '../actions'
 import AddChannel from '../components/AddChannel'
 import { parseName } from '../components/ChatTab'
-import Login from './Login'
-import ChatManager from './ChatManager'
 import { State } from '../reducers'
+import ChatManager from './ChatManager'
+import Login from './Login'
 
 const mapStateToProps = (state: State) => ({
     currentServer: state.currentServer,

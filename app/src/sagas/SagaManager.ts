@@ -1,7 +1,7 @@
 // Borrowed from https://gist.github.com/hoschi/6538249ad079116840825e20c48f1690
 // Note that reloading sagas has several issues/caveats to be aware of.
 // See https://github.com/yelouafi/redux-saga/issues/22#issuecomment-218737951 for discussion.
-import { take, fork, cancel } from 'redux-saga/effects'
+import { cancel, fork, take } from 'redux-saga/effects'
 
 import rootSaga from './connect'
 
@@ -23,11 +23,11 @@ function createAbortableSaga (saga) {
 }
 
 const SagaManager = {
-    startSagas(sagaMiddleware) {
+    startSagas (sagaMiddleware) {
         sagas.map(createAbortableSaga).forEach((saga) => sagaMiddleware.run(saga))
     },
 
-    cancelSagas(store) {
+    cancelSagas (store) {
         store.dispatch({
             type: CANCEL_SAGAS_HMR
         })

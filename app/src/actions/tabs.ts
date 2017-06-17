@@ -1,6 +1,6 @@
-import { Action, ActionMeta } from './types'
+import { IAction, IActionMeta } from './types'
 
-export function changeTab (name: string, server: string): ActionMeta<string, {server}> {
+export function changeTab (name: string, server: string): IActionMeta<string, {server}> {
     return {
         type: 'CHANGE_TAB',
         payload: name,
@@ -8,7 +8,7 @@ export function changeTab (name: string, server: string): ActionMeta<string, {se
     }
 }
 
-export function addTabs (names: string[], server: string): ActionMeta<string[], {server}> {
+export function addTabs (names: string[], server: string): IActionMeta<string[], {server}> {
     return {
         type: 'ADD_TABS',
         payload: names,
@@ -16,7 +16,7 @@ export function addTabs (names: string[], server: string): ActionMeta<string[], 
     }
 }
 
-export function tabAdded (name: string, server: string): ActionMeta<string, {server}> {
+export function tabAdded (name: string, server: string): IActionMeta<string, {server}> {
     return {
         type: 'TAB_ADDED',
         payload: name,
@@ -24,7 +24,7 @@ export function tabAdded (name: string, server: string): ActionMeta<string, {ser
     }
 }
 
-export function closeTab (url: string): Action<string> {
+export function closeTab (url: string): IAction<string> {
     return {
         type: 'CLOSE_TAB',
         payload: url

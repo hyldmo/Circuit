@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ChatTab from './ChatTab'
 import { ViewMode } from '../reducers/viewMode'
+import ChatTab from './ChatTab'
 
 export type ChatTabProps = {
     tabs: string[]

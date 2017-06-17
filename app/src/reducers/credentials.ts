@@ -1,21 +1,21 @@
-import { Action, ActionMeta } from '../actions/types'
+import { IActionMeta } from '../actions/types'
 
 // TODO: Move this
-export interface Credentials {
+export type Credentials = {
     readonly username: string
     readonly password?: string
     readonly server: string
     readonly port?: number
 }
-export interface ComponentActions {
+export type ComponentActions = {
     [propName: string]: any
 }
 
-const credentials = (state: Credentials = { username: '', server: '' }, action: ActionMeta<string|number, string>): Credentials => {
+const credentials = (state: Credentials = { username: '', server: '' }, action: IActionMeta<string|number, string>): Credentials => {
     switch (action.type) {
         case 'UPDATE_CREDENTIALS':
-            let newState = {
-                ...state,
+            const newState = {
+                ...state
             }
             newState[action.meta] = action.payload
             return  newState

@@ -1,9 +1,12 @@
-import {createStore, applyMiddleware, compose} from 'redux'
-import rootReducer from './reducers'
+import { applyMiddleware, createStore } from 'redux'
 import * as createLogger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 
+import rootReducer from './reducers'
 import SagaManager from './sagas/SagaManager'
+
+// Allow require to be used in TS file
+declare function require (name: string): any
 
 /**
  * Based on the current environment variable, we need to make sure
@@ -18,8 +21,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middlewares = [sagaMiddleware, logger]
 
-
-export default function configureStore(initialState = {}) {
+export default function configureStore (initialState = {}) {
     const store = createStore(
         rootReducer,
         initialState,
@@ -43,4 +45,3 @@ export default function configureStore(initialState = {}) {
 
     return store
 }
-

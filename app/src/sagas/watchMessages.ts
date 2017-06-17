@@ -1,8 +1,8 @@
-import { eventChannel, takeEvery, channel, Task } from 'redux-saga'
-import { take, call, put, fork, cancel, cancelled  } from 'redux-saga/effects'
-import {receive, connected, connecting, tabAdded, getUsers} from '../actions'
-import {paramSep, COMMAND, CMD} from '../../irc/commands'
+import { channel, eventChannel, takeEvery, Task } from 'redux-saga'
+import { call, cancel, cancelled, fork, put, take  } from 'redux-saga/effects'
+import {CMD, COMMAND, paramSep} from '../../irc/commands'
 import parse from '../../irc/parse'
+import {connected, connecting, getUsers, receive, tabAdded} from '../actions'
 
 export default function* watchMessages (socket: WebSocket) {
     const msgChannel = yield call(messageChannel, socket)
@@ -61,7 +61,7 @@ export default function* watchMessages (socket: WebSocket) {
     }
 }
 
-function* messageChannel(socket: WebSocket) {
+function* messageChannel (socket: WebSocket) {
     return eventChannel(emitter => {
         socket.onmessage = event => {
             emitter(event.data)

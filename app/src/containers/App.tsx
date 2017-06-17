@@ -2,9 +2,9 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
+import { State } from '../reducers'
 import Login from './Login'
 import ServerManager from './ServerManager'
-import { State } from '../reducers'
 
 
 const mapStateToProps = (state: State) => {

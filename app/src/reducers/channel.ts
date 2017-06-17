@@ -1,19 +1,19 @@
-import { ConnectionAction } from './connections'
 import { getRandomColor } from '../utils/color'
+import { ConnectionAction } from './connections'
 
-export interface Channel {
+export type Channel = {
     readonly name: string
-    readonly messages: IMessage[]
+    readonly messages: Message[]
     readonly userMessage: string
     readonly users: User[]
 }
 
-export interface User {
+export type User = {
     color: string
     name: string
 }
 
-export interface IMessage {
+export type Message = {
     readonly message: string,
     readonly timestamp: number
     readonly sender: string

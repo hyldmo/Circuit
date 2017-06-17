@@ -15,11 +15,11 @@ export default class AddChannel extends React.Component<Props, State> {
         channels: ''
     }
 
-    onChannelChange(value: string) {
+    onChannelChange (value: string) {
         this.setState({channels: value})
     }
 
-    render() {
+    render () {
         const { onSubmit } = this.props
         const { channels } = this.state
         return (

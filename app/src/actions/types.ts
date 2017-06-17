@@ -15,10 +15,10 @@ type ActionType =
     'CLOSE_TAB' |
     'GET_USERS'
 
-export interface Action<T> extends ReduxActions.Action<T> {
+export interface IAction<T> extends ReduxActions.Action<T> {
     readonly type: ActionType
 }
 
-export interface ActionMeta<Payload, Meta> extends ReduxActions.ActionMeta<Payload, Meta>  {
+export interface IActionMeta<Payload, Meta> extends ReduxActions.ActionMeta<Payload, Meta>  {
     readonly type: ActionType
 }

@@ -1,12 +1,13 @@
-import {ActionMeta} from './types'
-import {IMessage} from '../reducers/channel'
+import {IActionMeta} from './types'
+
+import {Message} from '../reducers/channel'
 
 type ServerMeta = {
     server: string
     channel: string
 }
 
-export function writeMessage(server: string, channel: string, message: string): ActionMeta < string, ServerMeta> {
+export function writeMessage (server: string, channel: string, message: string): IActionMeta<string, ServerMeta> {
     return {
         type: 'WRITE_MESSAGE',
         meta: {server, channel},
@@ -14,7 +15,7 @@ export function writeMessage(server: string, channel: string, message: string): 
     }
 }
 
-export function sendMessage (server: string, channel: string, message: string): ActionMeta<string, ServerMeta> {
+export function sendMessage (server: string, channel: string, message: string): IActionMeta<string, ServerMeta> {
     return {
         type: 'SEND_MESSAGE',
         meta: {server, channel},
@@ -22,7 +23,7 @@ export function sendMessage (server: string, channel: string, message: string): 
     }
 }
 
-export function receive (server: string, channel: string, message: IMessage): ActionMeta<IMessage, ServerMeta> {
+export function receive (server: string, channel: string, message: Message): IActionMeta<Message, ServerMeta> {
     return {
         type: 'RECEIVE_MESSAGE',
         meta: {server, channel},
@@ -30,7 +31,7 @@ export function receive (server: string, channel: string, message: IMessage): Ac
     }
 }
 
-export function getUsers (server: string, channel: string, users: string[]): ActionMeta<string[], ServerMeta> {
+export function getUsers (server: string, channel: string, users: string[]): IActionMeta<string[], ServerMeta> {
     return {
         type: 'GET_USERS',
         meta: {server, channel},

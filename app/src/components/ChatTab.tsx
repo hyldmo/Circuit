@@ -15,7 +15,7 @@ const ChatTab = ({name, isActive, changeTab, closeTab, showClose}) => (
 )
 
 
-export function parseName(url: string): string {
+export function parseName (url: string): string {
     // lol
     let words
     if (url.startsWith('ws')) {
@@ -28,7 +28,7 @@ export function parseName(url: string): string {
     if (words.length <= 1) {
         return url.toLowerCase()
     } else {
-        let name = words.slice(0, -1).reduce((a, b) => a.length > b.length ? a : b)
+        const name = words.slice(0, -1).reduce((a, b) => a.length > b.length ? a : b)
         return name.toLowerCase()
     }
 }
