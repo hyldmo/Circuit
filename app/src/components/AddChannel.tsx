@@ -2,12 +2,20 @@ import * as React from 'react'
 
 const splitChannels = (channels: string) => channels.replace(' ', '').split(',')
 
-export default class AddChannel extends React.Component<{onSubmit: (channels: string[]) => void}, {channels: string}> {
+type Props = {
+    onSubmit: (channels: string[]) => void
+}
+
+type State = {
+    channels: string
+}
+
+export default class AddChannel extends React.Component<Props, State> {
     state = {
         channels: ''
     }
 
-    onChannelChange(value) {
+    onChannelChange(value: string) {
         this.setState({channels: value})
     }
 

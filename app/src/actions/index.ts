@@ -1,6 +1,4 @@
 import { Action, ActionMeta } from './types'
-import { IMessage } from '../reducers/channel'
-import { Credentials } from '../reducers/credentials'
 import { ViewMode } from '../reducers/viewMode'
 
 export * from './chat'

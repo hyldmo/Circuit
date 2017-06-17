@@ -1,7 +1,12 @@
 import {ActionMeta} from './types'
 import {IMessage} from '../reducers/channel'
 
-export function writeMessage(server: string, channel: string, message: string): ActionMeta < string, {server, channel} > {
+type ServerMeta = {
+    server: string
+    channel: string
+}
+
+export function writeMessage(server: string, channel: string, message: string): ActionMeta < string, ServerMeta> {
     return {
         type: 'WRITE_MESSAGE',
         meta: {server, channel},
@@ -9,7 +14,7 @@ export function writeMessage(server: string, channel: string, message: string): 
     }
 }
 
-export function sendMessage (server: string, channel: string, message: string): ActionMeta<string, {server, channel}> {
+export function sendMessage (server: string, channel: string, message: string): ActionMeta<string, ServerMeta> {
     return {
         type: 'SEND_MESSAGE',
         meta: {server, channel},
@@ -17,7 +22,7 @@ export function sendMessage (server: string, channel: string, message: string): 
     }
 }
 
-export function receive (server: string, channel: string, message: IMessage): ActionMeta<IMessage, { server, channel }> {
+export function receive (server: string, channel: string, message: IMessage): ActionMeta<IMessage, ServerMeta> {
     return {
         type: 'RECEIVE_MESSAGE',
         meta: {server, channel},
@@ -25,7 +30,7 @@ export function receive (server: string, channel: string, message: IMessage): Ac
     }
 }
 
-export function getUsers (server: string, channel: string, users: string[]): ActionMeta<string[], { server, channel }> {
+export function getUsers (server: string, channel: string, users: string[]): ActionMeta<string[], ServerMeta> {
     return {
         type: 'GET_USERS',
         meta: {server, channel},

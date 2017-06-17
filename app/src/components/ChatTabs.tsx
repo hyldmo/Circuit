@@ -2,12 +2,12 @@ import * as React from 'react'
 import ChatTab from './ChatTab'
 import { ViewMode } from '../reducers/viewMode'
 
-export interface ChatTabProps {
+export type ChatTabProps = {
     tabs: string[]
     currentTab: string
     changeViewMode: (viewMode: ViewMode) => void
-    changeTab: Function
-    closeTab: Function
+    changeTab: (name: string) => void
+    closeTab: (name: string) => void
 }
 
 const ChatTabs = (props: ChatTabProps) => (

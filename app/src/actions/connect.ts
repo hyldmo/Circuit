@@ -1,7 +1,5 @@
 import { Action, ActionMeta } from './types'
-import { IMessage } from '../reducers/channel'
 import { Credentials } from '../reducers/credentials'
-import { ViewMode } from '../reducers/viewMode'
 
 export function connect (credentials: Credentials): Action<Credentials> {
     return {
@@ -10,10 +8,10 @@ export function connect (credentials: Credentials): Action<Credentials> {
     }
 }
 
-export function connecting (server: string): ActionMeta<undefined, {server}> {
+export function connecting (server: string): ActionMeta<undefined, string> {
     return {
         type: 'CONNECTING',
-        meta: {server}
+        meta: server
     }
 }
 

@@ -47,7 +47,7 @@ app.on('window-all-closed', function () {
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
         app.quit()
-        ircServer.close();
+        //ircServer.close();
     }
 })
 
