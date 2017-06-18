@@ -2,7 +2,7 @@ import * as irc from 'irc'
 import * as url from 'url'
 import * as WebSocket from 'ws'
 import { CMD, COMMAND, paramSep } from './commands'
-
+import { parseMessage, splitChannels  } from './parse'
 
 const options = {
     port: 31130
@@ -20,42 +20,84 @@ type RawMessage = {
     args: string[] // arguments to the command
 }
 
+export type WSMessage = {
+    type: 'IRC'|'SERVER'
+    data: string
+}
+
+export type ClientMessage = {
+    channel: string
+    message: string
+}
+
 const wss = new WebSocket.Server(options)
 console.log(`Listening for websocket connections on port ${options.port}`)
 
 
 wss.on('connection', (ws, req) => {
-    const send = message => ws.send(message, err => err && console.error(err) )
+    const send = (message: WSMessage) => ws.send(JSON.stringify(message), err => err && console.error(err) )
 
-    const { server, port, username, password } = url.parse(req.url, true).query
+    const { server, port, username, password, channels } = url.parse(req.url, true).query
     const client = new irc.Client(server, username, {
         port,
-        channels: ['###test'],
+        channels: splitChannels(decodeURIComponent(channels)),
         debug: true,
         autoRejoin: true
     })
 
     console.log(`Connecting to ${server}:${port}`)
-    send(`Connecting to ${server}:${port}`)
+    send({
+        type: 'SERVER',
+        data: `Connecting to ${server}:${port}`
+    })
 
     client.addListener('registered', (message: RawMessage) => {
-        send(`Connected to ${server}:${port} (${message.command})`)
+        send({
+            type: 'SERVER',
+            data: `Connected to ${server}:${port}`
+        })
     })
 
     client.addListener('message', (from: string, to: string, msg: string) => {
         const command = to.startsWith('#') ? 'MSG' : 'PRIVMSG'
         const message = [CMD, command, from, to, msg].join(paramSep)
-        send(message)
+        send({
+            type: 'IRC',
+            data: message
+        })
     })
 
     client.addListener('raw', (msg: RawMessage) => {
         const message = [CMD, msg.command.toUpperCase(), ...msg.args].join(paramSep)
-        send(message)
+        send({
+            type: 'IRC',
+            data: message
+        })
     })
 
     client.addListener('error', (message: RawMessage) => {
-        send(message.command)
+        send({
+            type: 'IRC',
+            data: message.command
+        })
     })
+
+    ws.onmessage = (message) => {
+        const msg: ClientMessage = JSON.parse(message.data.toString())
+        if (msg.channel === 'STATUS') {
+            try {
+                const [ cmd, ...args ] = msg.message.split(' ')
+                client.send(cmd, ...args)
+            } catch (e) {
+                send({
+                    type: 'SERVER',
+                    data: e
+                })
+            }
+        } else {
+            client.say(msg.channel, msg.message)
+        }
+    }
 })
 
 wss.on('error', (error) => {

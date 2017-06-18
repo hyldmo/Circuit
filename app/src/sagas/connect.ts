@@ -1,6 +1,6 @@
 import { channel, eventChannel, takeEvery, Task } from 'redux-saga'
 import { call, cancel, cancelled, fork, put, take  } from 'redux-saga/effects'
-import parseMessage from '../../irc/parse'
+import { ClientMessage } from '../../irc/server'
 import { connected, connecting, receive } from '../actions'
 import { IAction, IActionMeta } from '../actions/types'
 import { Credentials } from '../reducers/credentials'
@@ -14,7 +14,8 @@ export default function* watchConnects () {
 function* connectToServer (action: IAction<Credentials>) {
     try {
         const { server, port, username, password, channels } = action.payload
-        const socket = new WebSocket(`ws://localhost:31130?server=${server}&port=${port}&username=${username}&password=${password}&channels=${channels}`)
+        const URI = `ws://localhost:31130?server=${server}&port=${port}&username=${username}&password=${password}&channels=${encodeURIComponent(channels)}`
+        const socket = new WebSocket(URI)
         yield put(connecting(socket.url))
         const channel = yield call(connectChannel, socket)
 
@@ -34,12 +35,23 @@ function* connectToServer (action: IAction<Credentials>) {
 
 
 function* watchUserSentMessages (socket: WebSocket) {
+    const send = (message: ClientMessage) => socket.send(JSON.stringify(message))
     try {
         while (true) {
-            const { payload, meta } = yield take((action: IActionMeta<string, {channel: string, server: string}>) => {
+            type MessageAction = IActionMeta<string, {channel: string, server: string}>
+            const { payload, meta }: MessageAction = yield take((action: MessageAction) => {
                 return action.type === 'SEND_MESSAGE' && action.meta.server === socket.url
             })
-            socket.send(`${meta.channel}=>${payload}`)
+            if (payload.startsWith('/'))
+                send({
+                    channel: 'STATUS',
+                    message: payload.substring(1)
+                })
+            else
+                send({
+                    channel: meta.channel,
+                    message: payload
+                })
         }
     } finally {
         console.log(`Stopped watching messages to ${socket.url}`)

@@ -1,17 +1,17 @@
 import { channel, eventChannel, takeEvery, Task } from 'redux-saga'
 import { call, cancel, cancelled, fork, put, take  } from 'redux-saga/effects'
 import {CMD, COMMAND, paramSep} from '../../irc/commands'
-import parseMessage from '../../irc/parse'
+import { WSMessage } from '../../irc/server'
 import {connected, connecting, getUsers, receive, tabAdded} from '../actions'
 
 export default function* watchMessages (socket: WebSocket) {
     const msgChannel = yield call(messageChannel, socket)
     try {
         while (true) {
-            const msg = yield take(msgChannel)
-
-            if (msg.startsWith(CMD)) {
-                const args: string[] = msg.split(paramSep).slice(1)
+            const data = yield take(msgChannel)
+            const msg: WSMessage = JSON.parse(data)
+            if (msg.type === 'IRC') {
+                const args: string[] = msg.data.split(paramSep).slice(1)
                 const command = args.shift() as COMMAND
                 console.log(command, args)
                 switch (command) {
