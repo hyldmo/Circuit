@@ -1,6 +1,8 @@
 import { IAction, IActionMeta } from './types'
 
-export function changeTab (name: string, server: string): IActionMeta<string, {server}> {
+type ServerMeta = { server: string }
+
+export function changeTab (name: string, server: string): IActionMeta<string, ServerMeta> {
     return {
         type: 'CHANGE_TAB',
         payload: name,
@@ -8,7 +10,7 @@ export function changeTab (name: string, server: string): IActionMeta<string, {s
     }
 }
 
-export function addTabs (names: string[], server: string): IActionMeta<string[], {server}> {
+export function addTabs (names: string[], server: string): IActionMeta<string[], ServerMeta> {
     return {
         type: 'ADD_TABS',
         payload: names,
@@ -16,7 +18,7 @@ export function addTabs (names: string[], server: string): IActionMeta<string[],
     }
 }
 
-export function tabAdded (name: string, server: string): IActionMeta<string, {server}> {
+export function tabAdded (name: string, server: string): IActionMeta<string, ServerMeta> {
     return {
         type: 'TAB_ADDED',
         payload: name,

@@ -2,7 +2,7 @@ import { IAction, IActionMeta } from '../actions/types'
 import channel, { Channel, Message } from './channel'
 
 type TabAction = IAction<number>
-export type ConnectionAction = IActionMeta<string&string[]&Message, {server, channel}>
+export type ConnectionAction = IActionMeta<string&string[]&Message, {server: string, channel: string}>
 
 export type Connection = {
     readonly server: string

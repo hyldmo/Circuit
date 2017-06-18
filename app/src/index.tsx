@@ -4,14 +4,18 @@ import { Provider } from 'react-redux'
 
 import configureStore from './configureStore'
 import App from './containers/App'
+import { State } from './reducers'
 
-const initialState = {
+const initialState: State = {
     credentials: {
         server: 'irc.freenode.net',
         port: 6667,
-        username: `testuser${Math.round(Math.random() * 10000)}`
+        username: `testuser${Math.round(Math.random() * 10000)}`,
+        channels: '###test'
     },
-    connections: []
+    viewMode: 'DEFAULT',
+    connections: [],
+    currentServer: null
 }
 
 const store = configureStore(initialState)
@@ -29,7 +33,7 @@ if (module.hot) {
     // Support hot reloading of components
     // and display an overlay for runtime errors
     const renderApp = render
-    const renderError = (error) => {
+    const renderError = (error: Error) => {
         // TODO: Figure out to integrate with current electron error handler
     }
 

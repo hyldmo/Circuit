@@ -1,6 +1,6 @@
 import { channel, eventChannel, takeEvery, Task } from 'redux-saga'
 import { call, cancel, cancelled, fork, put, take  } from 'redux-saga/effects'
-import parse from '../../irc/parse'
+import parseMessage from '../../irc/parse'
 import { connected, connecting, receive } from '../actions'
 import { IAction, IActionMeta } from '../actions/types'
 import { Credentials } from '../reducers/credentials'
@@ -13,8 +13,8 @@ export default function* watchConnects () {
 
 function* connectToServer (action: IAction<Credentials>) {
     try {
-        const { server, port, username, password } = action.payload
-        const socket = new WebSocket(`ws://localhost:31130?server=${server}&port=${port}&username=${username}&password=${password}`)
+        const { server, port, username, password, channels } = action.payload
+        const socket = new WebSocket(`ws://localhost:31130?server=${server}&port=${port}&username=${username}&password=${password}&channels=${channels}`)
         yield put(connecting(socket.url))
         const channel = yield call(connectChannel, socket)
 
@@ -36,7 +36,7 @@ function* connectToServer (action: IAction<Credentials>) {
 function* watchUserSentMessages (socket: WebSocket) {
     try {
         while (true) {
-            const { payload, meta } = yield take((action: IActionMeta<string, {channel, server}>) => {
+            const { payload, meta } = yield take((action: IActionMeta<string, {channel: string, server: string}>) => {
                 return action.type === 'SEND_MESSAGE' && action.meta.server === socket.url
             })
             socket.send(`${meta.channel}=>${payload}`)

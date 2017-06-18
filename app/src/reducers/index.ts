@@ -11,7 +11,7 @@ export type State = {
     credentials: Credentials
 }
 
-const reducers = combineReducers({
+const reducers = combineReducers<State>({
     currentServer, viewMode, credentials, connections
 })
 

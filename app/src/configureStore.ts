@@ -1,8 +1,8 @@
 import { applyMiddleware, createStore } from 'redux'
-import * as createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 
-import rootReducer from './reducers'
+import rootReducer, { State } from './reducers'
 import SagaManager from './sagas/SagaManager'
 
 // Allow require to be used in TS file
@@ -21,8 +21,8 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middlewares = [sagaMiddleware, logger]
 
-export default function configureStore (initialState = {}) {
-    const store = createStore(
+export default function configureStore (initialState: State) {
+    const store = createStore<State>(
         rootReducer,
         initialState,
         applyMiddleware(...middlewares)

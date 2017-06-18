@@ -1,12 +1,13 @@
 import { IAction, IActionMeta } from './types'
 
+import { Credentials } from '../reducers/credentials'
 import { ViewMode } from '../reducers/viewMode'
 
 export * from './chat'
 export * from './connect'
 export * from './tabs'
 
-export function updateCredentials (field: string, value: string|number): IActionMeta<string|number, string> {
+export function updateCredentials (field: keyof Credentials, value: string|number): IActionMeta<string|number, string> {
     return {
         type: 'UPDATE_CREDENTIALS',
         meta: field,

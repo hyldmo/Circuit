@@ -1,7 +1,7 @@
 import { channel, eventChannel, takeEvery, Task } from 'redux-saga'
 import { call, cancel, cancelled, fork, put, take  } from 'redux-saga/effects'
 import {CMD, COMMAND, paramSep} from '../../irc/commands'
-import parse from '../../irc/parse'
+import parseMessage from '../../irc/parse'
 import {connected, connecting, getUsers, receive, tabAdded} from '../actions'
 
 export default function* watchMessages (socket: WebSocket) {

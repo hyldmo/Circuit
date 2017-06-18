@@ -4,7 +4,7 @@ export interface IrcMessage {
     channel: string
 }
 
-export default function parse(ircMessage: string): IrcMessage {
+export default function parseMessage (ircMessage: string): IrcMessage {
     const regex = /(\w+)=>(.*):(.*)/g
     const result = ircMessage.match(regex)
     if (!result) return null
@@ -14,4 +14,8 @@ export default function parse(ircMessage: string): IrcMessage {
         channel,
         message
     }
+}
+
+export function splitChannels (channels: string): string[] {
+    return channels.split(',').map(c => c.trim())
 }

@@ -1,6 +1,14 @@
 import * as React from 'react'
 
-const ChatTab = ({name, isActive, changeTab, closeTab, showClose}) => (
+type Props = {
+    name: string,
+    isActive: boolean,
+    changeTab: (name: string) => void,
+    closeTab: (name: string) => void,
+    showClose: boolean
+}
+
+const ChatTab: React.StatelessComponent<Props> = ({ name, isActive, changeTab, closeTab, showClose }) => (
     <div>
         <li className={isActive ? 'active' : 'inactive'}
             onClick={e => { if (!isActive) changeTab(name)}} >

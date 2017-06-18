@@ -11,6 +11,7 @@ const mapStateToProps = (state: State): Credentials => ({
     username: state.credentials.username,
     password: state.credentials.password,
     server: state.credentials.server,
+    channels: state.credentials.channels,
     port: state.credentials.port
 })
 
@@ -36,6 +37,11 @@ const Login: React.StatelessComponent<Props> = (props) => (
         <div>
             <input className='input' type='text' placeholder='Username' value={props.username}
                 onChange={e => props.updateCredentials('username', e.currentTarget.value)}
+            />
+        </div>
+        <div>
+            <input className='input' type='text' placeholder='Channels' value={props.channels}
+                onChange={e => props.updateCredentials('channels', e.currentTarget.value)}
             />
         </div>
         <div>
