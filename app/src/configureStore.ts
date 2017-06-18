@@ -1,5 +1,4 @@
-import { applyMiddleware, createStore } from 'redux'
-import { createLogger } from 'redux-logger'
+import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 import rootReducer, { State } from './reducers'
@@ -8,24 +7,22 @@ import SagaManager from './sagas/SagaManager'
 // Allow require to be used in TS file
 declare function require (name: string): any
 
-/**
- * Based on the current environment variable, we need to make sure
- * to exclude any DevTools-related code from the production builds.
- * The code is envify'd - using 'DefinePlugin' in Webpack.
- */
 
 const __DEV__ = process.env.NODE_ENV === 'development'
 
-const logger = createLogger()
 const sagaMiddleware = createSagaMiddleware()
 
-const middlewares = [sagaMiddleware, logger]
+const middlewares = [sagaMiddleware]
+
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default function configureStore (initialState: State) {
     const store = createStore<State>(
         rootReducer,
         initialState,
-        applyMiddleware(...middlewares)
+        composeEnhancers(
+            applyMiddleware(...middlewares)
+        )
     )
 
     // run sagas
