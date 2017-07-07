@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { addTabs, changeServer, changeViewMode } from '../actions'
+import { Actions } from '../actions'
 import AddChannel from '../components/AddChannel'
 import { parseName } from '../components/ChatTab'
 import { State } from '../reducers'
@@ -16,9 +16,9 @@ const mapStateToProps = (state: State) => ({
 })
 
 const dispatchToProps = {
-    changeViewMode,
-    changeServer,
-    addChannels: addTabs // TODO
+    changeViewMode: Actions.changeViewMode,
+    changeServer: Actions.changeServer,
+    addChannels: Actions.addTabs // TODO
 }
 
 
@@ -29,7 +29,7 @@ type Props = typeof stateProps & typeof dispatchToProps
 const viewModeComponent: React.StatelessComponent<Props> = (props) => {
     switch (props.viewMode) {
         case 'ADD_CHANNEL':
-            return <AddChannel onSubmit={cs => props.addChannels(cs, props.currentServer)} />
+            return <AddChannel onSubmit={cs => props.addChannels(cs, { server: props.currentServer })} />
         case 'ADD_SERVER':
             return <Login />
         case 'DEFAULT':

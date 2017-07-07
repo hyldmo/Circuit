@@ -1,34 +1,12 @@
-import { IAction, IActionMeta } from './types'
+import { createAction } from './actionCreator'
 
 type ServerMeta = { server: string }
 
-export function changeTab (name: string, server: string): IActionMeta<string, ServerMeta> {
-    return {
-        type: 'CHANGE_TAB',
-        payload: name,
-        meta: {server}
-    }
+const ChatActions = {
+    changeTab: createAction<'CHANGE_TAB', string, ServerMeta>('CHANGE_TAB'),
+    addTabs: createAction<'ADD_TABS', string[], ServerMeta>('ADD_TABS'),
+    tabAdded: createAction<'TAB_ADDED', string, ServerMeta>('TAB_ADDED'),
+    closeTab: createAction<'CLOSE_TAB', string>('CLOSE_TAB'),
 }
 
-export function addTabs (names: string[], server: string): IActionMeta<string[], ServerMeta> {
-    return {
-        type: 'ADD_TABS',
-        payload: names,
-        meta: {server}
-    }
-}
-
-export function tabAdded (name: string, server: string): IActionMeta<string, ServerMeta> {
-    return {
-        type: 'TAB_ADDED',
-        payload: name,
-        meta: {server}
-    }
-}
-
-export function closeTab (url: string): IAction<string> {
-    return {
-        type: 'CLOSE_TAB',
-        payload: url
-    }
-}
+export default ChatActions

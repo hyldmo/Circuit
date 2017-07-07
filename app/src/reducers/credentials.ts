@@ -1,4 +1,4 @@
-import { IActionMeta } from '../actions/types'
+import { Action } from '../actions'
 
 // TODO: Move this
 export type Credentials = {
@@ -20,7 +20,7 @@ const empty: Credentials = {
     port: null
 }
 
-const credentials = (state: Credentials = empty, action: IActionMeta<string|number, keyof Credentials>): Credentials => {
+const credentials = (state: Credentials = empty, action: Action): Credentials => {
     switch (action.type) {
         case 'UPDATE_CREDENTIALS':
             const newState = {

@@ -1,5 +1,5 @@
+import { Action } from '../actions'
 import { getRandomColor } from '../utils/color'
-import { ConnectionAction } from './connections'
 
 export type Channel = {
     readonly name: string
@@ -19,8 +19,8 @@ export type Message = {
     readonly sender: string
 }
 
-export default function channel (state: Channel, action: ConnectionAction): Channel {
-    if (state.name !== action.meta.channel)
+export default function channel (state: Channel, action: Action): Channel {
+    if (state.name !== (action.meta as { channel: string }).channel)
         return state
 
     switch (action.type) {

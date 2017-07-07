@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { changeTab, changeViewMode, closeTab, sendMessage, writeMessage } from '../actions'
+import { Actions } from '../actions'
 import ChatTabs from '../components/ChatTabs'
 import { State } from '../reducers'
 import Chat from './Chat'
@@ -15,11 +15,11 @@ const mapStateToProps = (state: State) => {
 }
 
 const dispatchToProps = {
-    writeMessage,
-    sendMessage,
-    changeViewMode,
-    changeTab,
-    closeTab
+    writeMessage: Actions.writeMessage,
+    sendMessage: Actions.sendMessage,
+    changeViewMode: Actions.changeViewMode,
+    changeTab: Actions.changeTab,
+    closeTab: Actions.closeTab
 }
 
 const stateProps = returntypeof(mapStateToProps)
@@ -31,7 +31,7 @@ const ChatManager: React.StatelessComponent<Props> = (props) => (
         <ChatTabs tabs={props.channels.map(c => c.name)}
             currentTab={props.currentChannel}
             changeViewMode={props.changeViewMode}
-            changeTab={name => props.changeTab(name, props.server)}
+            changeTab={name => props.changeTab(name, { server: props.server } )}
             closeTab={props.closeTab}
         />
         <Chat />

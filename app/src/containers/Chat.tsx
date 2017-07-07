@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { sendMessage, writeMessage } from '../actions'
+import { Actions } from '../actions'
 import Message from '../components/Message'
 import { State } from '../reducers'
 
@@ -17,8 +17,8 @@ const mapStateToProps = (state: State) => {
 }
 
 const dispatchToProps = {
-    writeMessage,
-    sendMessage
+    writeMessage: Actions.writeMessage,
+    sendMessage: Actions.sendMessage
 }
 
 const stateProps = returntypeof(mapStateToProps)
@@ -43,9 +43,9 @@ const Chat: React.StatelessComponent<Props> = (props) => (
         </div>
         <div className='chat__box'>
             <input className='input' placeholder='Write message...' value={props.userMessage}
-                onChange={e => props.writeMessage(props.server, props.name, e.currentTarget.value)}
-                onKeyDown={e => { if (e.key === 'Enter') props.sendMessage(props.server, props.name, props.userMessage)}} />
-            <button className='input input__btn' onClick={e => props.sendMessage(props.server, props.name, props.userMessage)}>
+                onChange={e => props.writeMessage(e.currentTarget.value, { server: props.server, channel: props.name })}
+                onKeyDown={e => { if (e.key === 'Enter') props.sendMessage(props.userMessage, { server: props.server, channel: props.name })}} />
+            <button className='input input__btn' onClick={e => props.sendMessage(props.userMessage, { server: props.server, channel: props.name })}>
                 Send
             </button>
         </div>

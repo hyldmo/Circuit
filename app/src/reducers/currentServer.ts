@@ -1,6 +1,6 @@
-import { IAction } from '../actions/types'
+import { Action } from '../actions'
 
-export default function currentServer (state = '', action: IAction<string>): string {
+export default function currentServer (state = '', action: Action): string {
     switch (action.type) {
         case 'CONNECTED':
         case 'CHANGE_SERVER':
