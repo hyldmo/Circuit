@@ -1,4 +1,4 @@
-import { IAction } from '../actions/types'
+import { Action } from '../actions'
 
 export type ViewMode =
     'ADD_CHANNEL' |
@@ -6,7 +6,7 @@ export type ViewMode =
     'DEFAULT'
 
 
-export default function viewMode (state: ViewMode = 'DEFAULT', action: IAction<ViewMode>): ViewMode {
+export default function viewMode (state: ViewMode = 'DEFAULT', action: Action): ViewMode {
     switch (action.type) {
         case 'CHANGE_VIEW_MODE':
             return action.payload

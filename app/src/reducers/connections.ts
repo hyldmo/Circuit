@@ -1,8 +1,6 @@
-import { IAction, IActionMeta } from '../actions/types'
+import { Action, AnyAction } from '../actions'
 import channel, { Channel, Message } from './channel'
 
-type TabAction = IAction<number>
-export type ConnectionAction = IActionMeta<string&string[]&Message, {server: string, channel: string}>
 
 export type Connection = {
     readonly server: string
@@ -16,8 +14,8 @@ type State =
     'CONNECTED' |
     'DISCONNECTED'
 
-const connection = (state: Connection, action: ConnectionAction): Connection => {
-    if (state.server !== action.meta.server)
+const connection = (state: Connection, action: Action): Connection => {
+    if (state.server !== (action.meta as { server: string }).server)
         return state
 
     switch (action.type) {
@@ -57,7 +55,7 @@ const connection = (state: Connection, action: ConnectionAction): Connection => 
     }
 }
 
-const connections = (state: Connection[] = [], action: ConnectionAction&TabAction): Connection[] => {
+const connections = (state: Connection[] = [], action: Action): Connection[] => {
     switch (action.type) {
         case 'CONNECTED':
             return [

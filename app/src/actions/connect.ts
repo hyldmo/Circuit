@@ -1,24 +1,11 @@
-import { IAction, IActionMeta } from './types'
+import { createAction } from './actionCreator'
 
 import { Credentials } from '../reducers/credentials'
 
-export function connect (credentials: Credentials): IAction<Credentials> {
-    return {
-        type: 'CONNECT',
-        payload: credentials
-    }
+const ConnectActions = {
+    connect: createAction<'CONNECT', Credentials>('CONNECT'),
+    connecting: createAction<'CONNECTING', string>('CONNECTING'),
+    connected: createAction<'CONNECTED', string>('CONNECTED'),
 }
 
-export function connecting (server: string): IActionMeta<undefined, string> {
-    return {
-        type: 'CONNECTING',
-        meta: server
-    }
-}
-
-export function connected (server: string): IAction<string> {
-    return {
-        type: 'CONNECTED',
-        payload: server
-    }
-}
+export default ConnectActions

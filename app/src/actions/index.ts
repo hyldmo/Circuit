@@ -1,31 +1,33 @@
-import { IAction, IActionMeta } from './types'
-
+import { returntypeof } from 'react-redux-typescript'
 import { Credentials } from '../reducers/credentials'
 import { ViewMode } from '../reducers/viewMode'
 
-export * from './chat'
-export * from './connect'
-export * from './tabs'
+import { createAction } from './actionCreator'
+import chatActions from './chat'
+import connectionActions from './connect'
+import tabActions from './tabs'
 
-export function updateCredentials (field: keyof Credentials, value: string|number): IActionMeta<string|number, string> {
-    return {
-        type: 'UPDATE_CREDENTIALS',
-        meta: field,
-        payload: value
-    }
+const divActions = {
+    updateCredentials: createAction<'UPDATE_CREDENTIALS', string|number, keyof Credentials>('UPDATE_CREDENTIALS'),
+    changeViewMode: createAction<'CHANGE_VIEW_MODE', ViewMode>('CHANGE_VIEW_MODE'),
+    changeServer: createAction<'CHANGE_SERVER', string>('CHANGE_SERVER')
+}
+
+export const Actions = {
+    ...chatActions,
+    ...connectionActions,
+    ...tabActions,
+    ...divActions
+}
+
+function resolveTypes (actions: typeof Actions) {
+    const functions = Object.values(actions)
+   const values = functions.map(action => action.type)
 }
 
 
-export function changeViewMode (viewMode: ViewMode): IAction<ViewMode> {
-    return {
-        type: 'CHANGE_VIEW_MODE',
-        payload: viewMode
-    }
-}
+const resolvedTypes = Object.values(Actions).map(action => action.type)[0]
 
-export function changeServer (server: string): IAction<string> {
-    return {
-        type: 'CHANGE_SERVER',
-        payload: server
-    }
-}
+
+export type Action = typeof Actions[keyof typeof Actions];
+export type AnyAction = { type: typeof resolvedTypes, payload: any, meta: any }

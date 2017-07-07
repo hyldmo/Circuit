@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { returntypeof } from 'react-redux-typescript'
 
-import { connect as connectToServer, updateCredentials } from '../actions'
+import { Actions } from '../actions'
 import { State } from '../reducers'
 import { Credentials } from '../reducers/credentials'
 
@@ -16,8 +16,8 @@ const mapStateToProps = (state: State): Credentials => ({
 })
 
 const dispatchToProps =  {
-    updateCredentials,
-    connect: connectToServer
+    updateCredentials: Actions.updateCredentials,
+    connect: Actions.connect
 }
 
 const stateProps = returntypeof(mapStateToProps)
@@ -28,20 +28,20 @@ const Login: React.StatelessComponent<Props> = (props) => (
     <div className='login'>
         <div>
            <input className='input' type='text' placeholder='Server' value={props.server}
-                onChange={e => props.updateCredentials('server', e.currentTarget.value)}
+                onChange={e => props.updateCredentials(e.currentTarget.value, 'server')}
             />
             <input className='input port' type='text' placeholder='Port' value={props.port} maxLength={5}
-                onChange={e => props.updateCredentials('port', e.currentTarget.value)}
+                onChange={e => props.updateCredentials(e.currentTarget.value, 'port')}
             />
         </div>
         <div>
             <input className='input' type='text' placeholder='Username' value={props.username}
-                onChange={e => props.updateCredentials('username', e.currentTarget.value)}
+                onChange={e => props.updateCredentials(e.currentTarget.value, 'username')}
             />
         </div>
         <div>
             <input className='input' type='text' placeholder='Channels' value={props.channels}
-                onChange={e => props.updateCredentials('channels', e.currentTarget.value)}
+                onChange={e => props.updateCredentials(e.currentTarget.value, 'channels')}
             />
         </div>
         <div>

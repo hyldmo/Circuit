@@ -1,40 +1,17 @@
-import {IActionMeta} from './types'
+import { createAction } from './actionCreator'
 
-import {Message} from '../reducers/channel'
+import { Message } from '../reducers/channel'
 
 type ServerMeta = {
     server: string
     channel: string
 }
 
-export function writeMessage (server: string, channel: string, message: string): IActionMeta<string, ServerMeta> {
-    return {
-        type: 'WRITE_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
+const ChatActions = {
+    writeMessage: createAction<'WRITE_MESSAGE', string, ServerMeta>('WRITE_MESSAGE'),
+    sendMessage: createAction<'SEND_MESSAGE', string, ServerMeta>('SEND_MESSAGE'),
+    receive: createAction<'RECEIVE_MESSAGE', Message, ServerMeta>('RECEIVE_MESSAGE'),
+    getUsers: createAction<'GET_USERS', string[], ServerMeta>('GET_USERS')
 }
 
-export function sendMessage (server: string, channel: string, message: string): IActionMeta<string, ServerMeta> {
-    return {
-        type: 'SEND_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
-}
-
-export function receive (server: string, channel: string, message: Message): IActionMeta<Message, ServerMeta> {
-    return {
-        type: 'RECEIVE_MESSAGE',
-        meta: {server, channel},
-        payload: message
-    }
-}
-
-export function getUsers (server: string, channel: string, users: string[]): IActionMeta<string[], ServerMeta> {
-    return {
-        type: 'GET_USERS',
-        meta: {server, channel},
-        payload: users
-    }
-}
+export default ChatActions
